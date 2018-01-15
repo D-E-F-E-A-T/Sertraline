@@ -1,4 +1,4 @@
-# JNeuralNetwork
+# Sertraline
 A Java Neural Network, still not finished
 # TODOs
 Finish implementing Backpropagation algorithm
