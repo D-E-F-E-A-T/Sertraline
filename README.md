@@ -1,5 +1,8 @@
 # Sertraline
-A Java Neural Network, still not finished
+Sertraline is a Java Neural Network framework designed for studing purposes. The framework is still work in progress, but aims to be a pretty decent framework usable in your private coding and, why not, in a production environment.
+
+Sertraline is an anti-depressant-obsessant used in treating depression, OCD, PTSD and some anxiety disorders. Here used as name for the framework as referring to brain issues
+
 # TODOs
 Finish implementing Backpropagation algorithm
 
