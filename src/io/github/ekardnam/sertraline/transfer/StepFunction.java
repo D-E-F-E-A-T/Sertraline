@@ -1,7 +1,6 @@
 package io.github.ekardnam.sertraline.transfer;
 
-//step function implementation
-public class StepFunction implements TransferFunction {
+class StepFunction implements TransferFunction {
 
 	public double T(double x) {
 		if (x > 0) {

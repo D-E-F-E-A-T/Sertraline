@@ -1,6 +1,6 @@
 package io.github.ekardnam.sertraline.transfer;
 
-public class SigmoidFunction implements TransferFunction {
+class SigmoidFunction implements TransferFunction {
 
 	public double T(double x) {
 		return (1 / (1 + Math.exp(-x)));

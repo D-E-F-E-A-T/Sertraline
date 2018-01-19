@@ -1,6 +1,6 @@
 package io.github.ekardnam.sertraline.transfer;
 
-public class IdentityFunction implements TransferFunction {
+class IdentityFunction implements TransferFunction {
 
 	public double T(double x) {
 		return x;
