@@ -44,6 +44,7 @@ public class BackpropagationAlgorithm implements LearningAlgorithm {
 		return true;
 	}
 
+	//TODO implementation
 	public void train(NeuralNetwork neuralNetwork) {
 
 	}

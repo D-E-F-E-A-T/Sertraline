@@ -2,6 +2,7 @@ package io.github.ekardnam.sertraline.learning;
 
 import io.github.ekardnam.sertraline.NeuralNetwork;
 import io.github.ekardnam.sertraline.Perceptron;
+import io.github.ekardnam.sertraline.data.DataProvider;
 import io.github.ekardnam.sertraline.objects.Synapsis;
 import io.github.ekardnam.sertraline.transfer.TransferFunction;
 
@@ -9,35 +10,33 @@ import io.github.ekardnam.sertraline.transfer.TransferFunction;
 public class WidrowHoffAlgorithm implements LearningAlgorithm {
 	
 		//learning rate, default is 0.5
-		private double eta = 0.5;
+		protected double eta = 0.5;
 		
 		//max epochs, default 1024
-		private int maxEpochs = 1024;
+		protected int maxEpochs = 1024;
 		
 		//max error, default 0.00001
-		private double error = 0.00001;
+		protected double error = 0.00001;
 		
 		//training set
-		private double inputs[];
-		private double outputs[];
+		protected DataProvider provider; 
 		
-		public WidrowHoffAlgorithm(double inputs[], double outputs[]) {
-			this.inputs = inputs;
-			this.outputs = outputs;
+		public WidrowHoffAlgorithm(DataProvider provider) {
+			this.provider = provider;
 		}
 		
-		public WidrowHoffAlgorithm(double inputs[], double outputs[], double eta) {
-			this(inputs, outputs);
+		public WidrowHoffAlgorithm(DataProvider provider, double eta) {
+			this(provider);
 			setEta(eta);
 		}
 		
-		public WidrowHoffAlgorithm(double inputs[], double outputs[], double eta, int maxEpochs) {
-			this(inputs, outputs, eta);
+		public WidrowHoffAlgorithm(DataProvider provider, double eta, int maxEpochs) {
+			this(provider, eta);
 			this.maxEpochs = maxEpochs;
 		}
 		
-		public WidrowHoffAlgorithm(double inputs[], double outputs[], double eta, int maxEpochs, double error) {
-			this(inputs, outputs, eta, maxEpochs);
+		public WidrowHoffAlgorithm(DataProvider provider, double eta, int maxEpochs, double error) {
+			this(provider, eta, maxEpochs);
 			this.error = error;
 		}
 		
@@ -55,7 +54,6 @@ public class WidrowHoffAlgorithm implements LearningAlgorithm {
 			this.error = error;
 		}
 		
-		//set the learning rate
 		public void setEta(double eta) {
 			if (eta >= 1 || eta < 0) {
 				throw new IllegalArgumentException("Eta must be positive and less than 1");
@@ -71,45 +69,10 @@ public class WidrowHoffAlgorithm implements LearningAlgorithm {
 			this.maxEpochs = maxEpochs;
 		}
 
-		//training function, this algorithm is only for perceptrons
+		
+		//TODO rewrite all of this stuff
 		public void train(NeuralNetwork neuralNetwork) {
-			int i;
-			Synapsis s;
-			int inputsNumber = neuralNetwork.getInputNumber();
-			double y = 0;
-			double currentError = 0;
-			double dEdy = 0;
-			double dEdw[] = new double[inputsNumber + 1];
-			double currentInputs[] = new double[inputsNumber];
-			double delta = 0;
-			int epoch = 0;
-			TransferFunction transferFunction = neuralNetwork.getOutputLayer().getNeuron(0).getTransferFunction();
-			if (!transferFunction.derivable()) {
-				transferFunction = TransferFunction.IDENTITY_FUNCTION;
-			}
-			do {
-				currentError = 0;
-				for (i = 0; i < (inputsNumber + 1); i++) {
-					dEdw[i] = 0;
-				}
-				for (int t = 0; t < (inputs.length / inputsNumber); t++) {
-					System.arraycopy(inputs, (t * inputsNumber), currentInputs, 0, currentInputs.length);
-					y = neuralNetwork.runNetwork(currentInputs)[0];
-					dEdy = -(outputs[t] - y);
-					for (i = 0; i < inputsNumber; i++) {
-						dEdw[i] += dEdy * currentInputs[i] * transferFunction.dTdx(y);
-					}
-					dEdw[i] += -(dEdy * transferFunction.dTdx(y));
-					currentError += (dEdy * dEdy) / 2;
-				}
-				for (i = 0; i < inputsNumber; i++) {
-					s = neuralNetwork.getOutputLayer().getNeuron(0).getInLink(i);
-					delta = -(eta * dEdw[i]);
-					s.w += delta;
-				}
-				neuralNetwork.getOutputLayer().getNeuron(0).theta += (-(eta * dEdw[i]));
-				epoch++;
-			} while(currentError > error && epoch < maxEpochs);
+			//was horrible code, will rewrite it
 		}
 
 		public boolean prepare(NeuralNetwork neuralNetwork) {

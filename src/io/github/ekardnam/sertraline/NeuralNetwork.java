@@ -1,16 +1,16 @@
 package io.github.ekardnam.sertraline;
 
+import java.util.ArrayList;
+
 import io.github.ekardnam.sertraline.builder.DefaultNetworkBuilder;
 import io.github.ekardnam.sertraline.builder.NetworkBuilder;
+import io.github.ekardnam.sertraline.data.Vector;
+import io.github.ekardnam.sertraline.data.VectorIterator;
 import io.github.ekardnam.sertraline.learning.LearningAlgorithm;
 import io.github.ekardnam.sertraline.objects.Layer;
 import io.github.ekardnam.sertraline.objects.NetworkObject;
 import io.github.ekardnam.sertraline.objects.Neuron;
 import io.github.ekardnam.sertraline.objects.Synapsis;
-import io.github.ekardnam.sertraline.transfer.StepFunction;
-import io.github.ekardnam.sertraline.transfer.TransferFunction;
-
-import java.util.ArrayList;
 
 //a class that represents a neural network
 public class NeuralNetwork {
@@ -60,20 +60,28 @@ public class NeuralNetwork {
 		}
 	}
 	
-	//runs the network
-	public double[] runNetwork(double ... inputs) {
+	public Vector runNetwork(double ... inputs) {
+		//validate arguments
+		if (inputs.length != inputNumber) throw new IllegalArgumentException("Illegal input, wrong number of parameters");
+		
+		//all good
 		double outputs[] = new double[outputNumber];
-		int i = 0;
-		prepareInputLayer(inputs);
+		prepareInputLayer(new Vector(inputNumber, inputs));
 		for (Layer l : hiddenLayers) {
 			l.runLayer();
 		}
 		outputLayer.runLayer();
-		for (Neuron n : outputLayer.getNeurons()) {
-			outputs[i] = n.transfer;
-			i++;
-		}
-		return outputs;
+		
+		Vector output = new Vector(outputNumber);
+		VectorIterator iterator = (VectorIterator) output.iterator();
+		outputLayer.forEachNeuron(new NeuralNetworkCallback() {
+			public void run(NetworkObject o) {
+				Neuron n = (Neuron) o;
+				int i = iterator.nextIndex();
+				output.set(i, n.transfer);
+			}
+		});
+		return output;
 	}
 	
 	public int getInputNumber() {
@@ -120,15 +128,16 @@ public class NeuralNetwork {
 		this.networkBuilder = networkBuilder;
 	}
 	
-	public void prepareInputLayer(double inputs[]) {
-		int i = 0;
-		if (inputs.length != inputLayer.getNeuronNumber()) {
-			throw new IllegalArgumentException("Invalid inputs");
-		}
-		for (Neuron n : inputLayer.getNeurons()) {
-			n.transfer = inputs[i];
-			i++;
-		}
+	public void prepareInputLayer(final Vector input) {
+		if (input.getDimension() != inputLayer.getNeuronNumber()) throw new IllegalArgumentException("Invalid input");
+		
+		VectorIterator iterator = (VectorIterator) input.iterator();	
+		inputLayer.forEachNeuron(new NeuralNetworkCallback() {
+			public void run(NetworkObject o) {
+				Neuron n = (Neuron) o;
+				n.transfer = iterator.next();
+			}
+		});
 	}
 	
 	public void forEachLayer(final NeuralNetworkCallback neuralNetworkCallback) {
