@@ -1,6 +1,6 @@
-package io.github.luc99a.neuralnetwork;
+package io.github.ekardnam.sertraline;
 
-import io.github.luc99a.neuralnetwork.learning.PerceptronWidrowHoffAlgorithm;
+import io.github.ekardnam.sertraline.learning.WidrowHoffAlgorithm;
 
 
 public class Main {
@@ -11,7 +11,7 @@ public class Main {
 	
 	public static void main(String args[]) {
 		Perceptron perceptron = new Perceptron(PERCEPTRON_INPUTS);
-		perceptron.setLearningAlgorithm(new PerceptronWidrowHoffAlgorithm(INPUTS, OUTPUTS));
+		perceptron.setLearningAlgorithm(new WidrowHoffAlgorithm(INPUTS, OUTPUTS));
 		perceptron.buildNetwork();
 		perceptron.trainNetwork();
 		System.out.println("1 AND 1 = " + perceptron.runNetwork(1, 1)[0]);

@@ -1,8 +1,8 @@
-package io.github.luc99a.neuralnetwork.objects;
-
-import io.github.luc99a.neuralnetwork.transfer.TransferFunction;
+package io.github.ekardnam.sertraline.objects;
 
 import java.util.ArrayList;
+
+import io.github.ekardnam.sertraline.transfer.TransferFunction;
 
 //a class that represents a neuron
 public class Neuron extends NetworkObject {

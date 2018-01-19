@@ -1,27 +1,19 @@
-package io.github.luc99a.neuralnetwork;
+package io.github.ekardnam.sertraline;
 
-import io.github.luc99a.neuralnetwork.builder.DefaultNetworkBuilder;
-import io.github.luc99a.neuralnetwork.builder.NetworkBuilder;
-import io.github.luc99a.neuralnetwork.learning.LearningAlgorithm;
-import io.github.luc99a.neuralnetwork.objects.Layer;
-import io.github.luc99a.neuralnetwork.objects.NetworkObject;
-import io.github.luc99a.neuralnetwork.objects.Neuron;
-import io.github.luc99a.neuralnetwork.objects.Synapsis;
-import io.github.luc99a.neuralnetwork.transfer.StepFunction;
-import io.github.luc99a.neuralnetwork.transfer.TransferFunction;
+import io.github.ekardnam.sertraline.builder.DefaultNetworkBuilder;
+import io.github.ekardnam.sertraline.builder.NetworkBuilder;
+import io.github.ekardnam.sertraline.learning.LearningAlgorithm;
+import io.github.ekardnam.sertraline.objects.Layer;
+import io.github.ekardnam.sertraline.objects.NetworkObject;
+import io.github.ekardnam.sertraline.objects.Neuron;
+import io.github.ekardnam.sertraline.objects.Synapsis;
+import io.github.ekardnam.sertraline.transfer.StepFunction;
+import io.github.ekardnam.sertraline.transfer.TransferFunction;
 
 import java.util.ArrayList;
 
 //a class that represents a neural network
 public class NeuralNetwork {
-	
-	public static enum Type {
-		PERCEPTRON,
-		GENERIC
-	}
-	
-	//the transfer function used
-	protected TransferFunction transferFunction = new StepFunction();
 	
 	//the network builder
 	protected NetworkBuilder networkBuilder = new DefaultNetworkBuilder();
@@ -84,10 +76,6 @@ public class NeuralNetwork {
 		return outputs;
 	}
 	
-	public TransferFunction getTransferFunction() {
-		return transferFunction;
-	}
-	
 	public int getInputNumber() {
 		return inputNumber;
 	}
@@ -130,10 +118,6 @@ public class NeuralNetwork {
 	
 	public void setNetworkBuilder(NetworkBuilder networkBuilder) {
 		this.networkBuilder = networkBuilder;
-	}
-	
-	public Type getType() {
-		return Type.GENERIC;
 	}
 	
 	public void prepareInputLayer(double inputs[]) {

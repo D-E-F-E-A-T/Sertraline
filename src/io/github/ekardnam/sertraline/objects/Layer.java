@@ -1,4 +1,4 @@
-package io.github.luc99a.neuralnetwork.objects;
+package io.github.ekardnam.sertraline.objects;
 
 import java.util.ArrayList;
 

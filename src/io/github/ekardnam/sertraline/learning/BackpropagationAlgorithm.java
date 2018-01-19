@@ -1,10 +1,6 @@
-package io.github.luc99a.neuralnetwork.learning;
+package io.github.ekardnam.sertraline.learning;
 
-import io.github.luc99a.neuralnetwork.NeuralNetwork;
-import io.github.luc99a.neuralnetwork.objects.Layer;
-import io.github.luc99a.neuralnetwork.objects.Neuron;
-import io.github.luc99a.neuralnetwork.objects.Synapsis;
-import io.github.luc99a.neuralnetwork.transfer.TransferFunction;
+import io.github.ekardnam.sertraline.NeuralNetwork;
 
 public class BackpropagationAlgorithm implements LearningAlgorithm {
 	
@@ -49,50 +45,7 @@ public class BackpropagationAlgorithm implements LearningAlgorithm {
 	}
 
 	public void train(NeuralNetwork neuralNetwork) {
-		double delta = 0;
-		int epoch = 0;
-		double currentError;
-		int i;
-		int j;
-		int inputsNumber = neuralNetwork.getInputNumber();
-		int outputsNumber = neuralNetwork.getOutputNumber();
-		int hiddenLayersNumber = neuralNetwork.getHiddenLayers().size();
-		double currentInputs[] = new double[inputsNumber];
-		double y[] = new double[outputsNumber];
-		Layer previousLayer;
-		Synapsis s;
-		TransferFunction transfer = neuralNetwork.getTransferFunction();
-		if (!transfer.derivable()) {
-			transfer = TransferFunction.IDENTITY_FUNCTION;
-		}
-		do {
-			currentError = 0;
-			for (int t = 0; t < (inputs.length / inputsNumber); t++) {
-				System.arraycopy(inputs, (t * inputsNumber), currentInputs, 0, inputsNumber);
-				y = neuralNetwork.runNetwork(currentInputs);
-				i = 0;
-				for (Neuron n : neuralNetwork.getOutputLayer().getNeurons()) {
-					n.data[DEDY] = -(outputs[(t * outputsNumber) + i] - n.transfer);
-					error += Math.pow(n.data[DEDY], 2);
-					i++;
-				}
-				for (i = (hiddenLayersNumber - 1); i >= 0; i--) {
-					if (i == (hiddenLayersNumber - 1)) {
-						previousLayer = neuralNetwork.getOutputLayer();
-					} else {
-						previousLayer = neuralNetwork.getHiddenLayers().get(i - 1);
-					}
-					for (Neuron n1 : neuralNetwork.getHiddenLayers().get(i).getNeurons()) {
-						n1.data[DEDY] = 0;
-						for (Neuron n2 : previousLayer.getNeurons()) {
-							s = n1.getOutLinkTo(n2);
-							n1.data[DEDY] += n2.data[DEDY] * (transfer.dTdx(n2.transfer) + s.w);
-						}
-						n1.data[DEDY] += n1
-					}
-				}
-			}
-		} while(currentError > error && epoch < maxEpochs);
+
 	}
 
 }

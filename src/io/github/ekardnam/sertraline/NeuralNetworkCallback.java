@@ -1,6 +1,6 @@
-package io.github.luc99a.neuralnetwork;
+package io.github.ekardnam.sertraline;
 
-import io.github.luc99a.neuralnetwork.objects.NetworkObject;
+import io.github.ekardnam.sertraline.objects.NetworkObject;
 
 public interface NeuralNetworkCallback {
 	

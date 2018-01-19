@@ -1,4 +1,4 @@
-package io.github.luc99a.neuralnetwork.transfer;
+package io.github.ekardnam.sertraline.transfer;
 
 //interface that describes a transfer function
 public interface TransferFunction {

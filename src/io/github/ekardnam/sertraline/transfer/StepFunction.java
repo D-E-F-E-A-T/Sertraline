@@ -1,4 +1,4 @@
-package io.github.luc99a.neuralnetwork.transfer;
+package io.github.ekardnam.sertraline.transfer;
 
 //step function implementation
 public class StepFunction implements TransferFunction {

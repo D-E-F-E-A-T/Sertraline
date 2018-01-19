@@ -1,7 +1,7 @@
-package io.github.luc99a.neuralnetwork;
+package io.github.ekardnam.sertraline;
 
-import io.github.luc99a.neuralnetwork.learning.LearningAlgorithm;
-import io.github.luc99a.neuralnetwork.objects.Layer;
+import io.github.ekardnam.sertraline.learning.LearningAlgorithm;
+import io.github.ekardnam.sertraline.objects.Layer;
 
 import java.util.ArrayList;
 
@@ -20,11 +20,6 @@ public class Perceptron extends NeuralNetwork {
 	@Override
 	public ArrayList<Layer> getHiddenLayers() {
 		throw new RuntimeException("Perceptron doesn't have an hidden layer");
-	}
-	
-	@Override
-	public Type getType() {
-		return Type.PERCEPTRON;
 	}
 
 }

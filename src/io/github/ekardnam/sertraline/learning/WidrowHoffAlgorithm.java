@@ -1,11 +1,12 @@
-package io.github.luc99a.neuralnetwork.learning;
+package io.github.ekardnam.sertraline.learning;
 
-import io.github.luc99a.neuralnetwork.NeuralNetwork;
-import io.github.luc99a.neuralnetwork.objects.Synapsis;
-import io.github.luc99a.neuralnetwork.transfer.TransferFunction;
+import io.github.ekardnam.sertraline.NeuralNetwork;
+import io.github.ekardnam.sertraline.Perceptron;
+import io.github.ekardnam.sertraline.objects.Synapsis;
+import io.github.ekardnam.sertraline.transfer.TransferFunction;
 
 //this class implements the Widrow Hoff algorithm for the perceptron
-public class PerceptronWidrowHoffAlgorithm implements LearningAlgorithm {
+public class WidrowHoffAlgorithm implements LearningAlgorithm {
 	
 		//learning rate, default is 0.5
 		private double eta = 0.5;
@@ -20,36 +21,36 @@ public class PerceptronWidrowHoffAlgorithm implements LearningAlgorithm {
 		private double inputs[];
 		private double outputs[];
 		
-		public PerceptronWidrowHoffAlgorithm(double inputs[], double outputs[]) {
+		public WidrowHoffAlgorithm(double inputs[], double outputs[]) {
 			this.inputs = inputs;
 			this.outputs = outputs;
 		}
 		
-		public PerceptronWidrowHoffAlgorithm(double inputs[], double outputs[], double eta) {
+		public WidrowHoffAlgorithm(double inputs[], double outputs[], double eta) {
 			this(inputs, outputs);
 			setEta(eta);
 		}
 		
-		public PerceptronWidrowHoffAlgorithm(double inputs[], double outputs[], double eta, int maxEpochs) {
+		public WidrowHoffAlgorithm(double inputs[], double outputs[], double eta, int maxEpochs) {
 			this(inputs, outputs, eta);
 			this.maxEpochs = maxEpochs;
 		}
 		
-		public PerceptronWidrowHoffAlgorithm(double inputs[], double outputs[], double eta, int maxEpochs, double error) {
+		public WidrowHoffAlgorithm(double inputs[], double outputs[], double eta, int maxEpochs, double error) {
 			this(inputs, outputs, eta, maxEpochs);
 			this.error = error;
 		}
 		
-		public PerceptronWidrowHoffAlgorithm(double eta) {
+		public WidrowHoffAlgorithm(double eta) {
 			setEta(eta);
 		}
 		
-		public PerceptronWidrowHoffAlgorithm(double eta, int maxEpochs) {
+		public WidrowHoffAlgorithm(double eta, int maxEpochs) {
 			this(eta);
 			this.maxEpochs = maxEpochs;
 		}
 		
-		public PerceptronWidrowHoffAlgorithm(double eta, int maxEpochs, double error) {
+		public WidrowHoffAlgorithm(double eta, int maxEpochs, double error) {
 			this(eta, maxEpochs);
 			this.error = error;
 		}
@@ -112,7 +113,7 @@ public class PerceptronWidrowHoffAlgorithm implements LearningAlgorithm {
 		}
 
 		public boolean prepare(NeuralNetwork neuralNetwork) {
-			return neuralNetwork.getType() == NeuralNetwork.Type.PERCEPTRON;
+			return neuralNetwork instanceof Perceptron;
 		}
 		
 }

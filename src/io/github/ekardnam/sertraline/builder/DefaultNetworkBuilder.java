@@ -1,10 +1,10 @@
-package io.github.luc99a.neuralnetwork.builder;
+package io.github.ekardnam.sertraline.builder;
 
-import io.github.luc99a.neuralnetwork.NeuralNetwork;
-import io.github.luc99a.neuralnetwork.objects.Layer;
-import io.github.luc99a.neuralnetwork.objects.Neuron;
-import io.github.luc99a.neuralnetwork.objects.Synapsis;
-import io.github.luc99a.neuralnetwork.transfer.TransferFunction;
+import io.github.ekardnam.sertraline.NeuralNetwork;
+import io.github.ekardnam.sertraline.objects.Layer;
+import io.github.ekardnam.sertraline.objects.Neuron;
+import io.github.ekardnam.sertraline.objects.Synapsis;
+import io.github.ekardnam.sertraline.transfer.TransferFunction;
 
 import java.util.ArrayList;
 import java.util.Random;

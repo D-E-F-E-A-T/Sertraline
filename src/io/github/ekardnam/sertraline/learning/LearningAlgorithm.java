@@ -1,6 +1,6 @@
-package io.github.luc99a.neuralnetwork.learning;
+package io.github.ekardnam.sertraline.learning;
 
-import io.github.luc99a.neuralnetwork.NeuralNetwork;
+import io.github.ekardnam.sertraline.NeuralNetwork;
 
 public interface LearningAlgorithm {
 	
