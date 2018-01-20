@@ -4,6 +4,6 @@ import io.github.ekardnam.sertraline.NeuralNetwork;
 
 public interface NetworkBuilder {
 	
-	public void build(NeuralNetwork network, NetworkPattern pattern);
+	public void build(NeuralNetwork network, BuildPipeline pipeline);
 
 }

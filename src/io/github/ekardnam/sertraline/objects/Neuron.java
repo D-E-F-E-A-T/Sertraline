@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import io.github.ekardnam.sertraline.transfer.TransferFunction;
 
 //a class that represents a neuron
-public class Neuron extends NetworkObject {
+public class Neuron {
 	
 	//in synapsis
-	private ArrayList<Synapsis> inLinks;
+	protected ArrayList<Synapsis> inLinks;
 	
 	//out synapsis
-	private ArrayList<Synapsis> outLinks;
+	protected ArrayList<Synapsis> outLinks;
 	
 	//transfer function
-	private TransferFunction transferFunction;
+	protected TransferFunction transferFunction;
 	
 	//transfer function result
 	public double transfer;
@@ -22,12 +22,14 @@ public class Neuron extends NetworkObject {
 	//active potential
 	public double potential;
 	
+	//bias
+	//TODO move to network structure
 	public double theta;
 	
 	public Neuron() {
 		inLinks = new ArrayList<Synapsis>();
 		outLinks = new ArrayList<Synapsis>();
-		transferFunction = TransferFunction.STEP_FUNCTION;
+		transferFunction = TransferFunction.DEFAULT_FUNCTION;
 	}
 	
 	public Neuron(TransferFunction transferFunction) {
@@ -41,11 +43,11 @@ public class Neuron extends NetworkObject {
 		this.theta = theta;
 	}
 	
-	public int getInLinksNumber() {
+	public int getHowManyInLinks() {
 		return inLinks.size();
 	}
 	
-	public int getOutLinksNumbers() {
+	public int getHowManyOutLinks() {
 		return outLinks.size();
 	}
 	
@@ -73,33 +75,15 @@ public class Neuron extends NetworkObject {
 		return outLinks;
 	}
 	
-	public Synapsis getOutLinkTo(Neuron n) {
-		for (Synapsis s : getOutLinks()) {
-			if (s.getOut() == n) {
-				return s;
-			}
-		}
-		return null;
-	}
-	
-	public Synapsis getInLinkTo(Neuron n) {
-		for (Synapsis s : getInLinks()) {
-			if (s.getIn() == n) {
-				return s;
-			}
-		}
-		return null;
-	}
-	
 	public TransferFunction getTransferFunction() {
 		return transferFunction;
 	}
 	
 	//calculates the active potential
-	private double activationFunction() {
+	protected double activationFunction() {
 		double potential = 0;
 		for (Synapsis s : inLinks) {
-			potential += s.w * s.getIn().transfer;
+			potential += s.w * s.getFrom().transfer;
 		}
 		return potential;
 	}
@@ -107,7 +91,7 @@ public class Neuron extends NetworkObject {
 	//runs the neuron
 	public void runNeuron() {
 		potential = activationFunction();
-		transfer = transferFunction.T(potential - theta);
+		transfer = transferFunction.function(potential - theta);
 	}
 
 }

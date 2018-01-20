@@ -18,6 +18,8 @@ public class NeuralNetwork {
 	//hidden layers of the network
 	protected List<Layer> layers;
 	
-	
+	public void addLayer(Layer l) {
+		layers.add(l);
+	}
 	
 }

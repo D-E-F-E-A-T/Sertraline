@@ -2,11 +2,11 @@ package io.github.ekardnam.sertraline.transfer;
 
 class IdentityFunction implements TransferFunction {
 
-	public double T(double x) {
+	public double function(double x) {
 		return x;
 	}
 
-	public double dTdx(double x) {
+	public double derivative(double x) {
 		return 1;
 	}
 

@@ -2,14 +2,14 @@ package io.github.ekardnam.sertraline.transfer;
 
 class StepFunction implements TransferFunction {
 
-	public double T(double x) {
+	public double function(double x) {
 		if (x > 0) {
 			return 1;
 		}
 		return 0;
 	}
 
-	public double dTdx(double x) {
+	public double derivative(double x) {
 		return 1;
 	}
 

@@ -1,41 +1,38 @@
 package io.github.ekardnam.sertraline.objects;
 
-public class Synapsis extends NetworkObject {
+public class Synapsis {
 	
-		//input neuron
-		private Neuron in;
+		protected Neuron from;
 		
-		//output neuron
-		private Neuron out;
+		protected Neuron to;
 		
-		//synapsis weight
 		public double w;
 		
-		public Synapsis(Neuron in, Neuron out, double w) {
-			this.in = in;
-			this.out = out;
+		public Synapsis(Neuron from, Neuron to, double w) {
+			this.from = from;
+			this.to = to;
 			this.w = w;
 		}
 		
-		public Synapsis(Neuron in, Neuron out) {
-			this.in = in;
-			this.out = out;
+		public Synapsis(Neuron from, Neuron to) {
+			this.from = from;
+			this.to = to;
 		}
 		
-		public Neuron getIn() {
-			return in;
+		public Neuron getFrom() {
+			return from;
 		}
 		
-		public Neuron getOut() {
-			return out;
+		public Neuron getTo() {
+			return to;
 		}
 		
-		public void setIn(Neuron in) {
-			this.in = in;
+		public void setFrom(Neuron from) {
+			this.from = from;
 		}
 		
-		public void setOut(Neuron out) {
-			this.out = out;
+		public void setTo(Neuron to) {
+			this.to = to;
 		}
 
 }
