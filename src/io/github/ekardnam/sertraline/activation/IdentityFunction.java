@@ -1,6 +1,6 @@
-package io.github.ekardnam.sertraline.transfer;
+package io.github.ekardnam.sertraline.activation;
 
-class IdentityFunction implements TransferFunction {
+public class IdentityFunction implements ActivationFunction {
 
 	public double function(double x) {
 		return x;

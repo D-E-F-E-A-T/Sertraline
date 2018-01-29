@@ -1,6 +1,7 @@
-package io.github.ekardnam.sertraline.transfer;
+package io.github.ekardnam.sertraline.activation;
 
-class StepFunction implements TransferFunction {
+//step function implementation
+public class StepFunction implements ActivationFunction {
 
 	public double function(double x) {
 		if (x > 0) {

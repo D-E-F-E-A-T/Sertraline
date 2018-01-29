@@ -2,7 +2,7 @@ package io.github.ekardnam.sertraline.objects;
 
 import java.util.ArrayList;
 
-import io.github.ekardnam.sertraline.transfer.TransferFunction;
+import io.github.ekardnam.sertraline.activation.ActivationFunction;
 
 //a class that represents a neuron
 public class Neuron {
@@ -12,12 +12,12 @@ public class Neuron {
 	
 	//out synapsis
 	protected ArrayList<Synapsis> outLinks;
+
+	//activation function
+	private ActivationFunction activationFunction;
 	
-	//transfer function
-	protected TransferFunction transferFunction;
-	
-	//transfer function result
-	public double transfer;
+	//activation function result
+	public double out;
 	
 	//active potential
 	public double potential;
@@ -29,17 +29,17 @@ public class Neuron {
 	public Neuron() {
 		inLinks = new ArrayList<Synapsis>();
 		outLinks = new ArrayList<Synapsis>();
-		transferFunction = TransferFunction.DEFAULT_FUNCTION;
+		activationFunction = ActivationFunction.STEP_FUNCTION;
 	}
 	
-	public Neuron(TransferFunction transferFunction) {
+	public Neuron(ActivationFunction activationFunction) {
 		inLinks = new ArrayList<Synapsis>();
 		outLinks = new ArrayList<Synapsis>();
-		this.transferFunction = transferFunction;
+		this.activationFunction = activationFunction;
 	}
 	
-	public Neuron(TransferFunction transferFunction, double theta) {
-		this(transferFunction);
+	public Neuron(ActivationFunction activationFunction, double theta) {
+		this(activationFunction);
 		this.theta = theta;
 	}
 	
@@ -75,23 +75,23 @@ public class Neuron {
 		return outLinks;
 	}
 	
-	public TransferFunction getTransferFunction() {
-		return transferFunction;
+	public ActivationFunction getActivationFunction() {
+		return activationFunction;
 	}
 	
 	//calculates the active potential
-	protected double activationFunction() {
+	protected double potential() {
 		double potential = 0;
 		for (Synapsis s : inLinks) {
-			potential += s.w * s.getFrom().transfer;
+			potential += s.w * s.getFrom().out;
 		}
 		return potential;
 	}
 	
 	//runs the neuron
 	public void runNeuron() {
-		potential = activationFunction();
-		transfer = transferFunction.function(potential - theta);
+		potential = potential();
+		out = activationFunction.function(potential - theta);
 	}
 
 }

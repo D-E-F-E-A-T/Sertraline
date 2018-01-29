@@ -1,27 +1,27 @@
 package io.github.ekardnam.sertraline.builder;
 
+import io.github.ekardnam.sertraline.activation.ActivationFunction;
 import io.github.ekardnam.sertraline.objects.Layer;
 import io.github.ekardnam.sertraline.objects.Neuron;
-import io.github.ekardnam.sertraline.transfer.TransferFunction;
 
 public class DefaultLayerBuilder implements LayerBuilder {
 
-	protected TransferFunction tf;
+	protected ActivationFunction af;
 	
 	protected RandomProvider rp;
 	
 	public DefaultLayerBuilder() {
-		this.tf = TransferFunction.DEFAULT_FUNCTION;
+		this.af = ActivationFunction.DEFAULT_FUNCTION;
 		this.rp = RandomProvider.DEFAULT_PROVIDER;
 	}
 	
-	public DefaultLayerBuilder(TransferFunction tf) {
-		this.tf = tf;
+	public DefaultLayerBuilder(ActivationFunction af) {
+		this.af = af;
 		rp = RandomProvider.DEFAULT_PROVIDER;
 	}
 	
-	public DefaultLayerBuilder(TransferFunction tf, RandomProvider rp) {
-		this.tf = tf;
+	public DefaultLayerBuilder(ActivationFunction af, RandomProvider rp) {
+		this.af = af;
 		this.rp = rp;
 	}
 	
@@ -29,7 +29,7 @@ public class DefaultLayerBuilder implements LayerBuilder {
 	public Layer build(int neurons) {
 		Layer layer = new Layer();
 		for (int i = 0; i < neurons; i++) {
-			layer.addNeuron(new Neuron(tf, rp.random()));
+			layer.addNeuron(new Neuron(af, rp.random()));
 		}
 		return layer;
 	}
