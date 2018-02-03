@@ -1,0 +1,12 @@
+group 'io.github.ekardnam'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'idea'
+apply plugin: 'java'
+
+jar {
+    manifest.attributes["Implementation-Title"] = rootProject.name
+    manifest.attributes["Implementation-Version"] = version
+}
+
+build.dependsOn jar
