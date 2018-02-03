@@ -23,10 +23,6 @@ public class Neuron {
 	//active potential
 	public double potential;
 	
-	//bias
-	//TODO move to network structure
-	public double theta;
-	
 	public Neuron() {
 		inLinks = new ArrayList();
 		outLinks = new ArrayList();
@@ -41,31 +37,7 @@ public class Neuron {
 	
 	public Neuron(ActivationFunction activationFunction, double theta) {
 		this(activationFunction);
-		this.theta = theta;
-	}
-	
-	public int getHowManyInLinks() {
-		return inLinks.size();
-	}
-	
-	public int getHowManyOutLinks() {
-		return outLinks.size();
-	}
-	
-	public void addInLink(Synapsis s) {
-		inLinks.add(s);
-	}
-	
-	public void addOutLink(Synapsis s) {
-		outLinks.add(s);
-	}
-	
-	public Synapsis getInLink(int i) {
-		return inLinks.get(i);
-	}
-	
-	public Synapsis getOutLink(int i) {
-		return outLinks.get(i);
+		inLinks.add(new BiasSynapsis(this, theta));
 	}
 	
 	public List<Synapsis> getInLinks() {
@@ -85,15 +57,11 @@ public class Neuron {
 		return null;
 	}
 	
-	public ActivationFunction getActivationFunction() {
-		return activationFunction;
-	}
-	
 	//calculates the active potential
 	protected double potential() {
 		double potential = 0;
 		for (Synapsis s : inLinks) {
-			potential += s.w * s.getFrom().out;
+			potential += s.getPotential();
 		}
 		return potential;
 	}
@@ -101,7 +69,7 @@ public class Neuron {
 	//runs the neuron
 	public void runNeuron() {
 		potential = potential();
-		out = activationFunction.function(potential - theta);
+		out = activationFunction.function(potential);
 	}
 
 }

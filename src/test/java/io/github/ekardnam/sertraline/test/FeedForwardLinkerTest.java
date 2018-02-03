@@ -11,8 +11,8 @@ public class FeedForwardLinkerTest {
 
     @Test
     public void testFeedForwardLinker() {
-        int n1 = 5;
-        int n2 = 6;
+        int n1 = 1;
+        int n2 = 1;
         DefaultLayerBuilder dlb = new DefaultLayerBuilder();
         Layer l1 = dlb.build(n1);
         Layer l2 = dlb.build(n2);

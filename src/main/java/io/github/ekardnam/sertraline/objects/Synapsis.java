@@ -26,13 +26,9 @@ public class Synapsis {
 		public Neuron getTo() {
 			return to;
 		}
-		
-		public void setFrom(Neuron from) {
-			this.from = from;
-		}
-		
-		public void setTo(Neuron to) {
-			this.to = to;
+
+		public double getPotential() {
+			return from.out * w;
 		}
 
 }

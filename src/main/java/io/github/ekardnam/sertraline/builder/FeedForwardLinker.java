@@ -20,8 +20,8 @@ public class FeedForwardLinker implements LayerLinker {
 		for (Neuron from : before) {
 			for (Neuron to : after) {
 				Synapsis s = new Synapsis(from, to, rp.random());
-				from.addOutLink(s);
-				to.addInLink(s);
+				from.getOutLinks().add(s);
+				to.getInLinks().add(s);
 			}
 		}
 	}
