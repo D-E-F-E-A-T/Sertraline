@@ -2,17 +2,14 @@ package io.github.ekardnam.sertraline.objects;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Layer implements Iterable<Neuron> {
 	
-	protected ArrayList<Neuron> neurons;
+	protected List<Neuron> neurons;
 	
 	public Layer() {
-		neurons = new ArrayList<Neuron>();
-	}
-	
-	public void newNeuron() {
-		neurons.add(new Neuron());
+		neurons = new ArrayList();
 	}
 	
 	public void addNeuron(Neuron n) {
@@ -25,10 +22,6 @@ public class Layer implements Iterable<Neuron> {
 	
 	public Neuron getNeuron(int i) {
 		return neurons.get(i);
-	}
-	
-	public ArrayList<Neuron> getNeurons() {
-		return neurons;
 	}
 	
 	public void runLayer() {
