@@ -1,6 +1,7 @@
 package io.github.ekardnam.sertraline.objects;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.github.ekardnam.sertraline.activation.ActivationFunction;
 
@@ -8,10 +9,10 @@ import io.github.ekardnam.sertraline.activation.ActivationFunction;
 public class Neuron {
 	
 	//in synapsis
-	protected ArrayList<Synapsis> inLinks;
+	protected List<Synapsis> inLinks;
 	
 	//out synapsis
-	protected ArrayList<Synapsis> outLinks;
+	protected List<Synapsis> outLinks;
 
 	//activation function
 	private ActivationFunction activationFunction;
@@ -27,14 +28,14 @@ public class Neuron {
 	public double theta;
 	
 	public Neuron() {
-		inLinks = new ArrayList<Synapsis>();
-		outLinks = new ArrayList<Synapsis>();
+		inLinks = new ArrayList();
+		outLinks = new ArrayList();
 		activationFunction = ActivationFunction.STEP_FUNCTION;
 	}
 	
 	public Neuron(ActivationFunction activationFunction) {
-		inLinks = new ArrayList<Synapsis>();
-		outLinks = new ArrayList<Synapsis>();
+		inLinks = new ArrayList();
+		outLinks = new ArrayList();
 		this.activationFunction = activationFunction;
 	}
 	
@@ -67,12 +68,21 @@ public class Neuron {
 		return outLinks.get(i);
 	}
 	
-	public ArrayList<Synapsis> getInLinks() {
+	public List<Synapsis> getInLinks() {
 		return inLinks;
 	}
 	
-	public ArrayList<Synapsis> getOutLinks() {
+	public List<Synapsis> getOutLinks() {
 		return outLinks;
+	}
+
+	public Synapsis getLinkTo(Neuron n) {
+		for (Synapsis s : outLinks) {
+			if (s.to == n) {
+				return s;
+			}
+		}
+		return null;
 	}
 	
 	public ActivationFunction getActivationFunction() {
