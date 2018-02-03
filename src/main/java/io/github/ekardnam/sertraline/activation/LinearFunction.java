@@ -1,6 +1,6 @@
 package io.github.ekardnam.sertraline.activation;
 
-public class LinearFunction implements ActivationFunction {
+class LinearFunction implements ActivationFunction {
 
 	public double function(double x) {
 		return x;

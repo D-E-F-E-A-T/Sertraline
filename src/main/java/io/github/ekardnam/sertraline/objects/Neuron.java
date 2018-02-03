@@ -46,7 +46,11 @@ public class Neuron {
 		}
 		return null;
 	}
-	
+
+	public ActivationFunction getActivationFunction() {
+		return activationFunction;
+	}
+
 	//calculates the active potential
 	protected double getPotential() {
 		double potential = 0;

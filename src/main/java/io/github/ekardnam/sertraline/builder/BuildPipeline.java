@@ -1,5 +1,7 @@
 package io.github.ekardnam.sertraline.builder;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,11 +10,11 @@ public class BuildPipeline implements Iterable<LayerDescriptor> {
 	
 	protected List<LayerDescriptor> pipeline = new ArrayList<LayerDescriptor>();
 	
-	public void add(LayerDescriptor ld) {
+	public void add(@NotNull LayerDescriptor ld) {
 		pipeline.add(ld);
 	}
 	
-	public void add(LayerDescriptor ld, int n) {
+	public void add(@NotNull LayerDescriptor ld, int n) {
 		for (int i = 0; i < n; i++) {
 			add(ld);
 		}
