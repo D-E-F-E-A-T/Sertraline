@@ -22,4 +22,6 @@ public class BuildPipeline implements Iterable<LayerDescriptor> {
 		return pipeline.iterator();
 	}
 
+	public int size() { return pipeline.size(); }
+
 }

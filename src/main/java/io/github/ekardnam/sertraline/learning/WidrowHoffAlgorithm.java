@@ -1,18 +1,17 @@
 package io.github.ekardnam.sertraline.learning;
 
 import io.github.ekardnam.sertraline.NeuralNetwork;
-import io.github.ekardnam.sertraline.Perceptron;
 import io.github.ekardnam.sertraline.data.DataProvider;
 
-public class WidrowHoffAlgorithm implements LearningAlgorithm {
+public class WidrowHoffAlgorithm extends LearningAlgorithm {
 
 	@Override
 	public boolean init(NeuralNetwork neuralNetwork) {
-		return false;
+		return neuralNetwork.getLayers().size() == 2; //works on perceptrons
 	}
 
 	@Override
-	public void train(NeuralNetwork neuralNetwork) {
+	public void algorithm(NeuralNetwork neuralNetwork, DataProvider dataProvider) {
 
 	}
 }
