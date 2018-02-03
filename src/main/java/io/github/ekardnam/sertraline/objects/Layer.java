@@ -1,12 +1,11 @@
 package io.github.ekardnam.sertraline.objects;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-import io.github.ekardnam.sertraline.NeuralNetworkCallback;
-
-public class Layer extends NetworkObject {
+public class Layer implements Iterable<Neuron> {
 	
-	private ArrayList<Neuron> neurons;
+	protected ArrayList<Neuron> neurons;
 	
 	public Layer() {
 		neurons = new ArrayList<Neuron>();
@@ -20,7 +19,7 @@ public class Layer extends NetworkObject {
 		neurons.add(n);
 	}
 	
-	public int getNeuronNumber() {
+	public int getHowManyNeurons() {
 		return neurons.size();
 	}
 	
@@ -37,11 +36,23 @@ public class Layer extends NetworkObject {
 			n.runNeuron();
 		}
 	}
-	
-	public void forEachNeuron(NeuralNetworkCallback callback) {
-		for (Neuron n : neurons) {
-			callback.run(n);
-		}
+
+	public Iterator<Neuron> iterator() {
+		return new Iterator<Neuron>() {
+			
+			private int index = 0;
+
+			public boolean hasNext() {
+				return index < getHowManyNeurons();
+			}
+
+			@Override
+			public Neuron next() {
+				return getNeuron(index);
+			}
+			
+			
+		};
 	}
 
 }

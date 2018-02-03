@@ -3,8 +3,6 @@ package io.github.ekardnam.sertraline.learning;
 import io.github.ekardnam.sertraline.NeuralNetwork;
 import io.github.ekardnam.sertraline.Perceptron;
 import io.github.ekardnam.sertraline.data.DataProvider;
-import io.github.ekardnam.sertraline.objects.Synapsis;
-import io.github.ekardnam.sertraline.transfer.TransferFunction;
 
 //this class implements the Widrow Hoff algorithm for the perceptron
 public class WidrowHoffAlgorithm implements LearningAlgorithm {
