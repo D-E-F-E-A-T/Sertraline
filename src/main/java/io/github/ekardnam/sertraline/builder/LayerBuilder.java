@@ -8,7 +8,7 @@ public interface LayerBuilder {
 	LayerBuilder DEFAULT_BUILDER = new DefaultLayerBuilder();
 	LayerBuilder SIGMOID_BUILDER = DEFAULT_BUILDER;
 	LayerBuilder STEP_BUILDER = new DefaultLayerBuilder(ActivationFunction.STEP_FUNCTION);
-	LayerBuilder IDENTITY_BUILDER = new DefaultLayerBuilder(ActivationFunction.IDENTITY_FUNCTION);
+	LayerBuilder LINEAR_BUILDER = new DefaultLayerBuilder(ActivationFunction.LINEAR_FUNCTION);
 	
 	public Layer build(int neurons);
 

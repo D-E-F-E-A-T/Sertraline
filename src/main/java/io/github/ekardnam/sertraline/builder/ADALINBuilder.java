@@ -2,12 +2,12 @@ package io.github.ekardnam.sertraline.builder;
 
 import io.github.ekardnam.sertraline.NeuralNetwork;
 
-public class PerceptronBuilder extends DefaultBuilder {
+public class ADALINBuilder extends DefaultBuilder {
 
     public void build(NeuralNetwork network, int inputs, int outputs) {
         BuildPipeline bp = new BuildPipeline();
-        bp.add(new LayerDescriptor(LayerBuilder.DEFAULT_BUILDER, LayerLinker.FEED_FORWARD_LINKER, inputs));
-        bp.add(new LayerDescriptor(LayerBuilder.DEFAULT_BUILDER, LayerLinker.OUTPUT_LAYER, outputs));
+        bp.add(new LayerDescriptor(LayerBuilder.LINEAR_BUILDER, LayerLinker.FEED_FORWARD_LINKER, inputs));
+        bp.add(new LayerDescriptor(LayerBuilder.LINEAR_BUILDER, LayerLinker.OUTPUT_LAYER, outputs));
         build(network, bp);
     }
 
