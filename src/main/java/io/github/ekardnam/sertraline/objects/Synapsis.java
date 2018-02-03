@@ -18,14 +18,6 @@ public class Synapsis {
 			this.from = from;
 			this.to = to;
 		}
-		
-		public Neuron getFrom() {
-			return from;
-		}
-		
-		public Neuron getTo() {
-			return to;
-		}
 
 		public double getPotential() {
 			return from.out * w;

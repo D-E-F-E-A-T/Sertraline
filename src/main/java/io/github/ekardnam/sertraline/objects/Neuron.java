@@ -15,19 +15,9 @@ public class Neuron {
 	protected List<Synapsis> outLinks;
 
 	//activation function
-	private ActivationFunction activationFunction;
-	
-	//activation function result
+	protected ActivationFunction activationFunction;
+
 	public double out;
-	
-	//active potential
-	public double potential;
-	
-	public Neuron() {
-		inLinks = new ArrayList();
-		outLinks = new ArrayList();
-		activationFunction = ActivationFunction.STEP_FUNCTION;
-	}
 	
 	public Neuron(ActivationFunction activationFunction) {
 		inLinks = new ArrayList();
@@ -58,18 +48,20 @@ public class Neuron {
 	}
 	
 	//calculates the active potential
-	protected double potential() {
+	protected double getPotential() {
 		double potential = 0;
 		for (Synapsis s : inLinks) {
 			potential += s.getPotential();
 		}
 		return potential;
 	}
-	
-	//runs the neuron
-	public void runNeuron() {
-		potential = potential();
-		out = activationFunction.function(potential);
+
+	protected double getOutput() {
+		return activationFunction.function(getPotential());
+	}
+
+	public void run() {
+		out = getOutput();
 	}
 
 }

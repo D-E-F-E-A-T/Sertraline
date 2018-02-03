@@ -19,33 +19,15 @@ public class Layer implements Iterable<Neuron> {
 	public int getHowManyNeurons() {
 		return neurons.size();
 	}
-	
-	public Neuron getNeuron(int i) {
-		return neurons.get(i);
-	}
-	
-	public void runLayer() {
-		for (Neuron n : neurons) {
-			n.runNeuron();
-		}
-	}
 
 	public Iterator<Neuron> iterator() {
-		return new Iterator<Neuron>() {
-			
-			private int index = 0;
+		return neurons.iterator();
+	}
 
-			public boolean hasNext() {
-				return index < getHowManyNeurons();
-			}
-
-			@Override
-			public Neuron next() {
-				return getNeuron(index);
-			}
-			
-			
-		};
+	public void run() {
+		for (Neuron n : neurons) {
+			n.run();
+		}
 	}
 
 }
