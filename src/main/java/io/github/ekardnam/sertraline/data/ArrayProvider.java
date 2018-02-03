@@ -1,7 +1,5 @@
 package io.github.ekardnam.sertraline.data;
 
-import java.util.Iterator;
-
 public class ArrayProvider implements DataProvider {
 
 	protected double inputs[];

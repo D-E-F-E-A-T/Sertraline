@@ -18,11 +18,16 @@ public class FeedForwardLinkerTest {
         Layer l2 = dlb.build(n2);
         FeedForwardLinker ffl = new FeedForwardLinker();
         ffl.link(l1, l2);
-        for (Neuron n : l1) {
-            for (Neuron nn : l2) {
-                Assert.assertNotNull(n.getLinkTo(nn));
+        Assert.assertTrue("Layers aren't linked correctly", linkedCorrectly(l1, l2));
+    }
+
+    public static boolean linkedCorrectly(Layer before, Layer after) {
+        for (Neuron n : before) {
+            for (Neuron nn : after) {
+                if (n.getLinkTo(nn) == null) return false;
             }
         }
+        return true;
     }
 
 }

@@ -12,7 +12,7 @@ public class DefaultLayerBuilderTest {
         int neurons = 5;
         DefaultLayerBuilder dlb = new DefaultLayerBuilder();
         Layer l = dlb.build(neurons);
-        Assert.assertTrue(l.getHowManyNeurons() == neurons);
+        Assert.assertTrue("Not how many neurons as expected", l.getHowManyNeurons() == neurons);
     }
 
 }
