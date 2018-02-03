@@ -19,19 +19,7 @@ public class BuildPipeline implements Iterable<LayerDescriptor> {
 	}
 
 	public Iterator<LayerDescriptor> iterator() {
-		return new Iterator<LayerDescriptor>() {
-			
-			private int index = 0;
-			
-			public boolean hasNext() {
-				return index < pipeline.size();
-			}
-			
-			public LayerDescriptor next() {
-				return pipeline.get(index++);
-			}
-			
-		};
+		return pipeline.iterator();
 	}
 
 }

@@ -8,7 +8,7 @@ public interface LearningAlgorithm {
 	 * Prepares the algorithm
 	 * @return true is succes
 	 * */
-	public boolean prepare(NeuralNetwork neuralNetwork);
+	public boolean init(NeuralNetwork neuralNetwork);
 	
 	/**
 	 * Trains the neural network

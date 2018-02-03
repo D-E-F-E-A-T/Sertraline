@@ -4,13 +4,13 @@ import io.github.ekardnam.sertraline.NeuralNetwork;
 
 public class BackpropagationAlgorithm implements LearningAlgorithm {
 
-	public boolean prepare(NeuralNetwork neuralNetwork) {
-		return true;
+	@Override
+	public boolean init(NeuralNetwork neuralNetwork) {
+		return false;
 	}
 
-	//TODO implementation
+	@Override
 	public void train(NeuralNetwork neuralNetwork) {
 
 	}
-
 }

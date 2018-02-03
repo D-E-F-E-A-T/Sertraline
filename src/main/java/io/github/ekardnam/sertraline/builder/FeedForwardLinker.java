@@ -16,6 +16,7 @@ public class FeedForwardLinker implements LayerLinker {
 		this.rp = rp;
 	}
 
+	@Override
 	public void link(Layer before, Layer after) {
 		for (Neuron from : before) {
 			for (Neuron to : after) {

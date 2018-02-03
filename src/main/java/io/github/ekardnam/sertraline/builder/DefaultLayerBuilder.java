@@ -25,7 +25,7 @@ public class DefaultLayerBuilder implements LayerBuilder {
 		this.rp = rp;
 	}
 	
-	
+	@Override
 	public Layer build(int neurons) {
 		Layer layer = new Layer();
 		for (int i = 0; i < neurons; i++) {
