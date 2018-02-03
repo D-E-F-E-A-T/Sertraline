@@ -1,4 +1,4 @@
-package io.github.ekardnam.sertraline.test;
+package io.github.ekardnam.sertraline.test.builder;
 
 import io.github.ekardnam.sertraline.builder.DefaultLayerBuilder;
 import io.github.ekardnam.sertraline.builder.FeedForwardLinker;
