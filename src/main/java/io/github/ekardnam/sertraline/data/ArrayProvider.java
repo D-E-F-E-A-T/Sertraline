@@ -1,5 +1,7 @@
 package io.github.ekardnam.sertraline.data;
 
+import java.util.Iterator;
+
 public class ArrayProvider implements DataProvider {
 
 	protected double inputs[];
@@ -18,13 +20,18 @@ public class ArrayProvider implements DataProvider {
 		if (inputDim == 0 || outputDim == 0) throw new IllegalArgumentException("You have to have some inputs and outputs");
 		if (inputs.length % inputDim != 0 || inputs.length == 0) throw new IllegalArgumentException("Inputs array has a wrong number of elements");
 		if (outputs.length % outputDim != 0 || outputs.length == 0) throw new IllegalArgumentException("Outputs array has a wrong number of elements");
-		
+		if (inputs.length / inputDim != outputs.length / outputDim) throw new IllegalArgumentException("Not as many input units as outputs'");
+
 		//all good then
 		this.inputs = inputs;
 		this.outputs = outputs;
 		this.inputDim = inputDim;
 		this.outputDim = outputDim;
 		i = 0;
+	}
+
+	protected int howManyUnits() {
+		return inputs.length / inputDim;
 	}
 
 	@Override
@@ -36,4 +43,22 @@ public class ArrayProvider implements DataProvider {
 		return new DataUnit(new Vector(inputDim, input), new Vector(outputDim, output));
 	}
 
+	@Override
+	public Iterator<DataUnit> iterator() {
+		return new Iterator<DataUnit>() {
+
+			private int index = 0;
+
+			@Override
+			public boolean hasNext() {
+				return index < howManyUnits();
+			}
+
+			@Override
+			public DataUnit next() {
+				index++;
+				return getNext();
+			}
+		};
+	}
 }

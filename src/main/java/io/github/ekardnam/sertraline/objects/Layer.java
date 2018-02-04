@@ -1,5 +1,7 @@
 package io.github.ekardnam.sertraline.objects;
 
+import io.github.ekardnam.sertraline.data.Vector;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +22,7 @@ public class Layer implements Iterable<Neuron> {
 		return neurons.size();
 	}
 
+	@Override
 	public Iterator<Neuron> iterator() {
 		return neurons.iterator();
 	}
@@ -29,5 +32,7 @@ public class Layer implements Iterable<Neuron> {
 			n.run();
 		}
 	}
+
+
 
 }

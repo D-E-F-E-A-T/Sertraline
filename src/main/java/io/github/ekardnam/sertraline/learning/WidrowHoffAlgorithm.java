@@ -2,45 +2,56 @@ package io.github.ekardnam.sertraline.learning;
 
 import com.sun.istack.internal.NotNull;
 import io.github.ekardnam.sertraline.NeuralNetwork;
-import io.github.ekardnam.sertraline.activation.ActivationFunction;
 import io.github.ekardnam.sertraline.data.DataProvider;
-
-import java.util.concurrent.atomic.AtomicBoolean;
+import io.github.ekardnam.sertraline.data.DataUnit;
+import io.github.ekardnam.sertraline.data.Vector;
 
 class WidrowHoffAlgorithm extends LearningAlgorithm {
 
-	public static final double DEFAULT_LEARNING_RATE = 1;
+	public static final double DEFAULT_LEARNING_RATE = 0.005;
+	public static final double DEFAULT_TARGET = 0.01;
+	public static final int DEFAULT_MAX_EPOCHS = 100;
 
 	protected double learningRate;
 
-	public WidrowHoffAlgorithm(double learningRate) {
+	protected double target;
+
+	protected int maxEpochs;
+
+	public WidrowHoffAlgorithm(double target, double learningRate, int maxEpochs) {
+		this.target = target;
 		this.learningRate = learningRate;
+		this.maxEpochs = maxEpochs;
+	}
+
+	public WidrowHoffAlgorithm(double target, double learningRate) {
+		this(target, learningRate, DEFAULT_MAX_EPOCHS);
+	}
+
+	public WidrowHoffAlgorithm(double target) {
+		this(target, DEFAULT_LEARNING_RATE);
 	}
 
 	public WidrowHoffAlgorithm() {
-		this(DEFAULT_LEARNING_RATE);
+		this(DEFAULT_TARGET);
 	}
 
-	private boolean isADALIN(@NotNull NeuralNetwork network) {
-		if (network.getLayers().size() != 2) return false;
-		AtomicBoolean valid = new AtomicBoolean(true);
-		for (int i = 0; i < 2; i++) {
-			network.getLayers().get(i).forEach(neuron -> {
-				if (neuron.getActivationFunction() != ActivationFunction.LINEAR_FUNCTION) {
-					valid.set(false);
-				}
-			});
+	@Override
+	protected boolean init(@NotNull NeuralNetwork network) {
+		return NeuralNetwork.isPerceptron(network); //works on perceptron
+	}
+
+	@Override
+	protected void algorithm(@NotNull NeuralNetwork network, DataProvider provider) {
+		for (int epoch = 0; epoch < maxEpochs; epoch++) {
+			for (DataUnit data : provider) {
+
+			}
 		}
-		return valid.get();
 	}
 
-	@Override
-	public boolean init(@NotNull NeuralNetwork network) {
-		return isADALIN(network); //works on ADALIN
+	protected double getError(@NotNull NeuralNetwork network, Vector input, Vector expected) {
+		return LearningAlgorithm.quadraticError(network.output(input), expected);
 	}
 
-	@Override
-	public void algorithm(@NotNull NeuralNetwork network, DataProvider provider) {
-
-	}
 }

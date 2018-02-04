@@ -1,9 +1,6 @@
 package io.github.ekardnam.sertraline.data;
 
-import java.util.Iterator;
-import java.util.Objects;
-
-public class Vector implements Iterable<Double>, Cloneable {
+public class Vector extends AbstractVector implements Iterable<Double> {
 	
 	protected int dimension;
 	
@@ -18,7 +15,12 @@ public class Vector implements Iterable<Double>, Cloneable {
 		this(dimension);
 		setArray(values);
 	}
-	
+
+	public Vector(int dimension, Double values[]) {
+		this(dimension);
+		setArray(values);
+	}
+
 	public int getDimension() {
 		return dimension;
 	}
@@ -34,6 +36,7 @@ public class Vector implements Iterable<Double>, Cloneable {
 		return new Vector(getDimension(), sum);
 	}
 
+	@Override
 	public Vector multiply(double scalar) {
 		double newVec[] = new double[getDimension()];
 		for (int i = 0; i < getDimension(); i++) newVec[i] = scalar * get(i);
@@ -44,40 +47,54 @@ public class Vector implements Iterable<Double>, Cloneable {
 		return add(other.multiply(-1));
 	}
 
+	@Override
+	public AbstractVector add(AbstractVector other) {
+		return null;
+	}
+
+	@Override
+	public AbstractVector subtract(AbstractVector other) {
+		return null;
+	}
+
 	public Vector divide(double scalar) {
 		return multiply(1 / scalar);
 	}
 
-	public boolean hasEqualDimension(Vector other) {
-		return getDimension() == other.getDimension();
+	@Override
+	public double dot(AbstractVector other) {
+		return 0;
+	}
+
+	public double dot(Vector other) {
+		if (!hasEqualDimension(other)) throw new IllegalArgumentException("Vectors must be equally sized");
+		double result = 0;
+		for (int i = 0; i < getDimension(); i++) result += get(i) * other.get(i);
+		return result;
 	}
 
 	@Override
-	public Iterator<Double> iterator() {
-		return new VectorIterator(this);
+	public double length() {
+		return Math.sqrt(square());
+	}
+
+	@Override
+	public double square() {
+		return dot(this);
 	}
 
 	@Override
 	public Vector clone() {
-		return new Vector(dimension, values);
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (!(object instanceof Vector)) return false;
-		Vector other = (Vector) object;
-		if (hasEqualDimension(other)) return false;
-		for (int i = 0; i < dimension; i++) if (get(i) != other.get(i)) return false;
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(dimension, values);
+		return new Vector(getDimension(), values);
 	}
 
 	protected void setArray(double values[]) {
 		if (values.length != dimension) throw new IllegalArgumentException("Array must have vector size");
 		System.arraycopy(values, 0, this.values, 0, dimension);
+	}
+
+	protected void setArray(Double values[]) {
+		if (values.length != dimension) throw new IllegalArgumentException("Array must have vector size");
+		for (int i = 0; i < dimension; i++) this.values[i] = values[i];
 	}
 }
