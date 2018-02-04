@@ -9,6 +9,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 class WidrowHoffAlgorithm extends LearningAlgorithm {
 
+	public static final double DEFAULT_LEARNING_RATE = 1;
+
+	protected double learningRate;
+
+	public WidrowHoffAlgorithm(double learningRate) {
+		this.learningRate = learningRate;
+	}
+
+	public WidrowHoffAlgorithm() {
+		this(DEFAULT_LEARNING_RATE);
+	}
+
 	private boolean isADALIN(@NotNull NeuralNetwork network) {
 		if (network.getLayers().size() != 2) return false;
 		AtomicBoolean valid = new AtomicBoolean(true);

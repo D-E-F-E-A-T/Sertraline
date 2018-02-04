@@ -26,7 +26,8 @@ public class ArrayProvider implements DataProvider {
 		this.outputDim = outputDim;
 		i = 0;
 	}
-	
+
+	@Override
 	public DataUnit getNext() {
 		double input[] = new double[inputDim];
 		double output[] = new double[outputDim];

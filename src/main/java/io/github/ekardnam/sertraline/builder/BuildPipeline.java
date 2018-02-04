@@ -20,6 +20,7 @@ public class BuildPipeline implements Iterable<LayerDescriptor> {
 		}
 	}
 
+	@Override
 	public Iterator<LayerDescriptor> iterator() {
 		return pipeline.iterator();
 	}
