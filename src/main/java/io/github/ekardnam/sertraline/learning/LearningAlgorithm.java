@@ -19,7 +19,7 @@ public abstract class LearningAlgorithm {
 		algorithm(network, provider);
 	}
 
-	public static double quadraticError(AbstractVector given, AbstractVector expected) {
+	public static double quadraticError(@NotNull AbstractVector given, @NotNull AbstractVector expected) {
 		return expected.subtract(given).square();
 	}
 

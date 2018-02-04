@@ -125,7 +125,7 @@ public class Neuron {
 		for (Synapsis s : inLinks) {
 			weights.add(s.w);
 		}
-		return new Vector(inLinks.size(), (Double[]) weights.toArray());
+		return new Vector(inLinks.size(), weights.stream().mapToDouble(value -> value).toArray());
 	}
 
 	/**
@@ -138,5 +138,11 @@ public class Neuron {
 			inLinks.get(i).w = weights.get(i);
 		}
 	}
+
+	/**
+	 * Used to load a value in the {@link Neuron}
+	 * @param out output value
+	 */
+	void loadValue(double out) { this.out = out; }
 
 }

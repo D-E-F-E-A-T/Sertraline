@@ -23,11 +23,6 @@ public class Matrix extends AbstractMatrix {
         setArray(values);
     }
 
-    public Matrix(int x, int y, Double values[][]) {
-        this(x, y);
-        setArray(values);
-    }
-
     public Matrix(int x, int y,  AbstractVector rows[]) {
         //TODO("Better illegal messages")
         if (rows.length != y) throw new IllegalArgumentException("Illegal");
@@ -80,7 +75,15 @@ public class Matrix extends AbstractMatrix {
         for (AbstractVector row : rows()) {
             newVec.add(row.dot(vector));
         }
-        return new Vector(vector.getDimension(), (Double[]) newVec.toArray());
+        return new Vector(vector.getDimension(), newVec.stream().mapToDouble(value -> value).toArray());
+    }
+
+    @Override
+    public AbstractMatrix multiplyOneToOne(AbstractMatrix other) {
+        if (getXDimension() != other.getXDimension() && getYDimension() != other.getYDimension()) throw new IllegalArgumentException("Illegal");
+        double newMat[][] = new double[getXDimension()][getYDimension()];
+        for (int i = 0; i <getXDimension(); i++) for (int j = 0; j < getYDimension(); j++) newMat[i][j] = get(i, j) * other.get(i, j);
+        return new Matrix(getXDimension(), getYDimension(), newMat);
     }
 
     @Override
@@ -96,7 +99,7 @@ public class Matrix extends AbstractMatrix {
     }
 
     @Override
-    public Matrix clone() {
+    public AbstractMatrix copy() {
         return new Matrix(x, y, values);
     }
 

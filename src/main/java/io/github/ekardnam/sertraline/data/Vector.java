@@ -16,11 +16,6 @@ public class Vector extends AbstractVector implements Iterable<Double> {
 		setArray(values);
 	}
 
-	public Vector(int dimension, Double values[]) {
-		this(dimension);
-		setArray(values);
-	}
-
 	@Override
 	public int getDimension() {
 		return dimension;
@@ -89,7 +84,7 @@ public class Vector extends AbstractVector implements Iterable<Double> {
 	}
 
 	@Override
-	public Vector clone() {
+	public AbstractVector copy() {
 		return new Vector(getDimension(), values);
 	}
 

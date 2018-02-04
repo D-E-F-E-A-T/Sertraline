@@ -24,6 +24,8 @@ public class Layer implements Iterable<Neuron> {
 		return neurons.size();
 	}
 
+	public Neuron get(int i) { return neurons.get(i); }
+
 	@Override
 	public Iterator<Neuron> iterator() {
 		return neurons.iterator();
@@ -40,7 +42,7 @@ public class Layer implements Iterable<Neuron> {
 		for (Neuron n : neurons) {
 			outputs.add(n.getOutput());
 		}
-		return new Vector(outputs.size(), (Double[]) outputs.toArray());
+		return new Vector(outputs.size(), outputs.stream().mapToDouble(value -> value).toArray());
 	}
 
 	public ActivationFunction getActivationFunction() {
@@ -53,6 +55,14 @@ public class Layer implements Iterable<Neuron> {
 			}
 		});
 		return af.get();
+	}
+
+	public void loadInputs(AbstractVector inputs) {
+		if (inputs.getDimension() != getHowManyNeurons()) throw new IllegalArgumentException("Illegal");
+
+		for (int i = 0; i < getHowManyNeurons(); i++) {
+			neurons.get(i).loadValue(inputs.get(i));
+		}
 	}
 
 }

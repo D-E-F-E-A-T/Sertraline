@@ -1,12 +1,10 @@
 package io.github.ekardnam.sertraline.data;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-public abstract class AbstractVector implements Iterable<Double>, Cloneable {
+public abstract class AbstractVector implements Iterable<Double> {
 
     public abstract int getDimension();
 
@@ -23,6 +21,8 @@ public abstract class AbstractVector implements Iterable<Double>, Cloneable {
     public abstract AbstractVector multiplyOneToOne(AbstractVector other);
 
     public abstract double dot(AbstractVector other);
+
+    public abstract AbstractVector copy();
 
     public double square() {
         return dot(this);
@@ -78,9 +78,9 @@ public abstract class AbstractVector implements Iterable<Double>, Cloneable {
     }
 
     public AbstractMatrix matrixify(int rows) {
-        List<AbstractVector> rowsVec = new ArrayList();
-        for (int i = 0; i < rows; i++) rowsVec.add(this);
-        return new Matrix(getDimension(), rows, (AbstractVector[]) rowsVec.toArray());
+        AbstractVector rowsVec[] = new AbstractVector[rows];
+        for (int i = 0; i < rows; i++) rowsVec[i] = copy();
+        return new Matrix(getDimension(), rows, rowsVec);
     }
 
 }

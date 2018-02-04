@@ -3,7 +3,7 @@ package io.github.ekardnam.sertraline.data;
 import java.util.Iterator;
 import java.util.function.Function;
 
-public abstract class AbstractMatrix implements Cloneable {
+public abstract class AbstractMatrix {
 
     public abstract AbstractMatrix add(AbstractMatrix other);
 
@@ -15,6 +15,8 @@ public abstract class AbstractMatrix implements Cloneable {
 
     public abstract AbstractVector multiply(AbstractVector vector);
 
+    public abstract AbstractMatrix multiplyOneToOne(AbstractMatrix other);
+
     public abstract double get(int i, int j);
 
     public abstract int getXDimension();
@@ -22,6 +24,8 @@ public abstract class AbstractMatrix implements Cloneable {
     public abstract int getYDimension();
 
     public abstract AbstractMatrix transpose();
+
+    public abstract AbstractMatrix copy();
 
     public Iterable<AbstractVector> rows() {
         return new Iterable<AbstractVector>() {
@@ -47,6 +51,10 @@ public abstract class AbstractMatrix implements Cloneable {
                 };
             }
         };
+    }
+
+    public Iterable<AbstractVector> cols() {
+        return transpose().rows();
     }
 
     public AbstractMatrix map(Function<Double, Double> map) {

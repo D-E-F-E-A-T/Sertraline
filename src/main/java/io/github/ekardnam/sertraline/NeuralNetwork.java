@@ -71,6 +71,8 @@ public class NeuralNetwork implements VectorOperation {
 	 */
 	public Layer outputLayer() { return lastLayer(); };
 
+	public Layer inputLayer() { return layers.get(0); }
+
 	/**
 	 * Gets the output {@link AbstractVector} corresponding to the input
 	 * @param input input vector type {@link AbstractVector}
@@ -78,6 +80,7 @@ public class NeuralNetwork implements VectorOperation {
 	 */
 	@Override
 	public AbstractVector output(AbstractVector input) {
+		inputLayer().loadInputs(input);
 		for (Layer l : layers) {
 			l.run();
 		}
