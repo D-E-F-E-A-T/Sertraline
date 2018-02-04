@@ -5,10 +5,10 @@ import io.github.ekardnam.sertraline.NeuralNetwork;
 
 public class ADALINEBuilder extends DefaultBuilder {
 
-    public void build(@NotNull NeuralNetwork network, int inputs, int outputs) {
+    public void build(@NotNull NeuralNetwork network, int inputs) {
         BuildPipeline bp = new BuildPipeline();
         bp.add(new LayerDescriptor(LayerBuilder.LINEAR_BUILDER, LayerLinker.FEED_FORWARD_LINKER, inputs));
-        bp.add(new LayerDescriptor(LayerBuilder.LINEAR_BUILDER, LayerLinker.OUTPUT_LAYER, outputs));
+        bp.add(new LayerDescriptor(LayerBuilder.LINEAR_BUILDER, LayerLinker.OUTPUT_LAYER, 1));
         build(network, bp);
     }
 

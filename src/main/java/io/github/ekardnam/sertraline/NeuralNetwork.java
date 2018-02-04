@@ -11,18 +11,32 @@ import io.github.ekardnam.sertraline.data.*;
 import io.github.ekardnam.sertraline.objects.Layer;
 import io.github.ekardnam.sertraline.objects.Neuron;
 
-//a class that represents a neural network
+/**
+ * A class that represents a {@link NeuralNetwork}
+ */
 public class NeuralNetwork implements VectorOperation {
-	
-	//hidden layers of the network
+
+	/**
+	 * Layers of the network
+	 */
 	protected List<Layer> layers;
 
+	/**
+	 * When calling {@link NeuralNetwork#addLayer(Layer)} the previous layer will be linked to it using this
+	 */
 	protected LayerLinker linkToNextLinker;
 
+	/**
+	 * Constructs a neural network
+	 */
 	public NeuralNetwork() {
 		layers = new ArrayList();
 	}
-	
+
+	/**
+	 * Adds a {@link Layer} to the network
+	 * @param l {@link Layer} to be added
+	 */
 	public void addLayer(Layer l) {
 		if (linkToNextLinker != null) {
 			linkToNextLinker.link(lastLayer(), l);
@@ -31,16 +45,37 @@ public class NeuralNetwork implements VectorOperation {
 		layers.add(l);
 	}
 
+	/**
+	 * When calling {@link NeuralNetwork#addLayer(Layer)} the previous layer will be linked to it using this
+	 * @param linkToNextLinker {@link LayerLinker} linker to link with
+	 */
 	public void linkToNextWith(LayerLinker linkToNextLinker) { this.linkToNextLinker = linkToNextLinker; }
 
+	/**
+	 * Returns the last elemtent of {@link NeuralNetwork#layers}
+	 * @return last element of {@link NeuralNetwork#layers}
+	 */
 	private Layer lastLayer() {
 		return layers.get(layers.size() - 1);
 	}
 
+	/**
+	 * Layers of the network
+	 * @return return {@link NeuralNetwork#layers}
+	 */
 	public List<Layer> getLayers() { return layers; }
 
+	/**
+	 * Gets tho output layer of the network
+	 * @return output {@link Layer} of the network
+	 */
 	public Layer outputLayer() { return lastLayer(); };
 
+	/**
+	 * Gets the output {@link AbstractVector} corresponding to the input
+	 * @param input input vector type {@link AbstractVector}
+	 * @return output vector
+	 */
 	@Override
 	public AbstractVector output(AbstractVector input) {
 		for (Layer l : layers) {
@@ -49,6 +84,11 @@ public class NeuralNetwork implements VectorOperation {
 		return outputLayer().getOutput();
 	}
 
+	/**
+	 * Returns an {@link AbstractMatrix} with weights connetting layer of index index with layer of index - 1
+	 * @param index index of the layer
+	 * @return {@link AbstractMatrix} of weights
+	 */
 	public AbstractMatrix getWeightsMatrix(int index) {
 		//TODO("Better illegal message")
 		if (index == 0 || index > layers.size() - 1) throw new IllegalArgumentException("Illegal");
@@ -65,6 +105,10 @@ public class NeuralNetwork implements VectorOperation {
 		return new Matrix(before.getHowManyNeurons(), layer.getHowManyNeurons(), (AbstractVector[]) weights.toArray());
 	}
 
+	/**
+	 * If unique, returns the {@link ActivationFunction}
+	 * @return the activation function if unique else null
+	 */
 	public ActivationFunction getActivationFunction() {
 		AtomicReference<ActivationFunction> af = new AtomicReference(null);
 		layers.forEach(layer -> {
@@ -77,11 +121,21 @@ public class NeuralNetwork implements VectorOperation {
 		return af.get();
 	}
 
+	/**
+	 * Helper function to check if the given network is a perceptron
+	 * @param network the network
+	 * @return true if perceptron else false
+	 */
 	public static boolean isPerceptron(NeuralNetwork network) {
 		return network.getLayers().size() == 2 && isFeedForward(network) && network.getActivationFunction() != null;
 	}
 
 
+	/**
+	 * Helper function to check is the given network is a feed forward network
+	 * @param network the network
+	 * @return true if it feed forward else false
+	 */
 	public static boolean isFeedForward(NeuralNetwork network) {
 		for (int i = 1; i < network.getLayers().size(); i++) {
 			Layer before = network.getLayers().get(i -1);
@@ -91,7 +145,12 @@ public class NeuralNetwork implements VectorOperation {
 		return network.getActivationFunction() != null;
 	}
 
+	/**
+	 * Helper function to check if a given network is an ADAptive LInear NEuron network
+	 * @param network the network
+	 * @return true if ADALINE else false
+	 */
 	public static boolean isADALINE(NeuralNetwork network) {
-		return network.getActivationFunction() == ActivationFunction.LINEAR_FUNCTION && isPerceptron(network);
+		return network.getActivationFunction() == ActivationFunction.LINEAR_FUNCTION && isPerceptron(network) && network.outputLayer().getHowManyNeurons() == 1;
 	}
 }
