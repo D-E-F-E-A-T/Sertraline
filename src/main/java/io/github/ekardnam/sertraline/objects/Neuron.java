@@ -7,39 +7,72 @@ import io.github.ekardnam.sertraline.activation.ActivationFunction;
 import io.github.ekardnam.sertraline.data.AbstractVector;
 import io.github.ekardnam.sertraline.data.Vector;
 
-//a class that represents a neuron
+/**
+ * A class that represents a {@link Neuron}
+ */
 public class Neuron {
-	
-	//in synapsis
+
+	/**
+	 * Synapsis coming into this neuron
+	 */
 	protected List<Synapsis> inLinks;
-	
-	//out synapsis
+
+	/**
+	 * Synapsis going out from this neuron
+	 */
 	protected List<Synapsis> outLinks;
 
-	//activation function
+	/**
+	 * {@link ActivationFunction} used by this neuron
+	 */
 	protected ActivationFunction activationFunction;
 
+	/**
+	 * Output value of this neuron, helper attribute
+	 */
 	protected double out;
-	
+
+	/**
+	 * Constructs a neuron with the given activation function
+	 * @param activationFunction the {@link ActivationFunction}
+	 */
 	public Neuron(ActivationFunction activationFunction) {
 		inLinks = new ArrayList();
 		outLinks = new ArrayList();
 		this.activationFunction = activationFunction;
 	}
-	
+
+	/**
+	 * Construct's a neuron with the given activation function and threshold value
+	 * @param activationFunction the {@link ActivationFunction}
+	 * @param theta the bias weight
+	 */
 	public Neuron(ActivationFunction activationFunction, double theta) {
 		this(activationFunction);
 		inLinks.add(new BiasSynapsis(this, theta));
 	}
-	
+
+	/**
+	 * Gets the synapsis coming into this neuron
+	 * @return {@link java.util.List} of {@link Synapsis}
+	 */
 	public List<Synapsis> getInLinks() {
 		return inLinks;
 	}
-	
+
+	/**
+	 * Gets the synapsis coming out of this neuron
+	 * @return {@link java.util.List} of {@link Synapsis}
+	 */
 	public List<Synapsis> getOutLinks() {
 		return outLinks;
 	}
 
+	/**
+	 * Gets the synpsis that links to the given neuron
+	 * @param n the neuron
+	 * @return the {@link Synapsis} that links to n
+	 */
 	public Synapsis getLinkTo(Neuron n) {
 		for (Synapsis s : outLinks) {
 			if (s.to == n) {
@@ -49,11 +82,18 @@ public class Neuron {
 		return null;
 	}
 
+	/**
+	 * Gets the activation function used by this neuron
+	 * @return the {@link ActivationFunction}
+	 */
 	public ActivationFunction getActivationFunction() {
 		return activationFunction;
 	}
 
-	//calculates the active potential
+	/**
+	 * Calculates the active potential of this neuron
+	 * @return active potential
+	 */
 	protected double getPotential() {
 		double potential = 0;
 		for (Synapsis s : inLinks) {
@@ -62,12 +102,24 @@ public class Neuron {
 		return potential;
 	}
 
+	/**
+	 * Returns the output value of this neuron
+	 * To be set you have to call {@link Neuron#run()}
+	 * @return the output {@link Neuron#out}
+	 */
 	public double getOutput() { return out; }
 
+	/**
+	 * Calculates and sets {@link Neuron#out}
+	 */
 	public void run() {
 		out = activationFunction.function(getPotential());
 	}
 
+	/**
+	 * Gets the weights' vector
+	 * @return {@link AbstractVector} weights' vector
+	 */
 	public AbstractVector weights() {
 		List<Double> weights = new ArrayList();
 		for (Synapsis s : inLinks) {
@@ -76,6 +128,10 @@ public class Neuron {
 		return new Vector(inLinks.size(), (Double[]) weights.toArray());
 	}
 
+	/**
+	 * Sets the weights' vecoter
+	 * @param weights {@link AbstractVector} weights' vector
+	 */
 	public void setWeights(AbstractVector weights) {
 		if (weights.getDimension() != inLinks.size()) throw new IllegalArgumentException("Must give as many weight as how many in links");
 		for (int i = 0; i < inLinks.size(); i++) {
