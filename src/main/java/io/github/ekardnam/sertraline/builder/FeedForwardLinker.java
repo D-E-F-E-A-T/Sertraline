@@ -28,4 +28,13 @@ public class FeedForwardLinker implements LayerLinker {
 		}
 	}
 
+	public static boolean areLinkedFeedForwardly(Layer before, Layer after) {
+		for (Neuron n : before) {
+			for (Neuron nn : after) {
+				if (n.getLinkTo(nn) == null) return false;
+			}
+		}
+		return true;
+	}
+
 }

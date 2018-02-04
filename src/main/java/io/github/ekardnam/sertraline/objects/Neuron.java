@@ -18,7 +18,7 @@ public class Neuron {
 	//activation function
 	protected ActivationFunction activationFunction;
 
-	public double out;
+	protected double out;
 	
 	public Neuron(ActivationFunction activationFunction) {
 		inLinks = new ArrayList();
@@ -61,12 +61,10 @@ public class Neuron {
 		return potential;
 	}
 
-	protected double getOutput() {
-		return activationFunction.function(getPotential());
-	}
+	public double getOutput() { return out; }
 
 	public void run() {
-		out = getOutput();
+		out = activationFunction.function(getPotential());
 	}
 
 	public Vector weights() {

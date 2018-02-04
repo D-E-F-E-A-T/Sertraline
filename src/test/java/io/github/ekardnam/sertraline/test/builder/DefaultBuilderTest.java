@@ -19,7 +19,7 @@ public class DefaultBuilderTest {
         NetworkBuilder.DEFAULT_BUILDER.build(nn, bp);
         List<Layer> layers = nn.getLayers();
         for (int i = 0; i < layers.size() - 1; i++) {
-            Assert.assertTrue("Layers aren't linked correctly", FeedForwardLinkerTest.linkedCorrectly(layers.get(i), layers.get(i + 1)));
+            Assert.assertTrue("Layers aren't linked correctly", FeedForwardLinker.areLinkedFeedForwardly(layers.get(i), layers.get(i + 1)));
             Assert.assertTrue("There aren't how many neurons as expected", layers.get(i).getHowManyNeurons() == neurons);
         }
     }

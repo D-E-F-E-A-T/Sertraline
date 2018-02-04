@@ -27,7 +27,7 @@ public class Matrix extends AbstractMatrix {
     public Matrix(int x, int y,  AbstractVector rows[]) {
         //TODO("Better illegal messages")
         if (rows.length != y) throw new IllegalArgumentException("Illegal");
-        for (int dim = rows[0].getDimension(), i = 0; i < rows.length; i++) if (rows[i].getDimension() != dim) throw new IllegalArgumentException("Illegal");
+        for (int i = 0; i < rows.length; i++) if (rows[i].getDimension() != x) throw new IllegalArgumentException("Illegal");
 
         this.x = x;
         this.y = y;

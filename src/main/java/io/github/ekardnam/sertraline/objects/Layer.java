@@ -33,6 +33,12 @@ public class Layer implements Iterable<Neuron> {
 		}
 	}
 
-
+	public Vector getOutput() {
+		List<Double> outputs = new ArrayList();
+		for (Neuron n : neurons) {
+			outputs.add(n.getOutput());
+		}
+		return new Vector(outputs.size(), (Double[]) outputs.toArray());
+	}
 
 }
