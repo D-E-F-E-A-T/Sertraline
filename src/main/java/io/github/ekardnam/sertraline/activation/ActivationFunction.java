@@ -1,17 +1,28 @@
 package io.github.ekardnam.sertraline.activation;
 
+import io.github.ekardnam.sertraline.data.AbstractVector;
+
 //interface that describes a activation function
-public interface ActivationFunction {
+public abstract class ActivationFunction {
 	
-	ActivationFunction LINEAR_FUNCTION = new LinearFunction();
-	ActivationFunction STEP_FUNCTION = new StepFunction();
-	ActivationFunction SIGMOID_FUNCTION = new SigmoidFunction();
-	ActivationFunction DEFAULT_FUNCTION = SIGMOID_FUNCTION;
+	public static final ActivationFunction LINEAR_FUNCTION = new LinearFunction();
+	public static final ActivationFunction STEP_FUNCTION = new StepFunction();
+	public static final ActivationFunction SIGMOID_FUNCTION = new SigmoidFunction();
+	public static final ActivationFunction DEFAULT_FUNCTION = SIGMOID_FUNCTION;
 	
-	public double function(double x);
+	public abstract double function(double x);
 	
-	public double derivative(double x);
+	public abstract double derivative(double x);
 	
-	public boolean derivable();
+	public abstract boolean derivable();
+
+	public AbstractVector function(AbstractVector vector) {
+		return vector.map(value -> function(value));
+	}
+
+	public AbstractVector derivative(AbstractVector vector) {
+		if (!derivable()) return null;
+		return vector.map(value -> derivative(value));
+	}
 
 }

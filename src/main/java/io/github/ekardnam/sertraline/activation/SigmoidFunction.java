@@ -1,6 +1,6 @@
 package io.github.ekardnam.sertraline.activation;
 
-class SigmoidFunction implements ActivationFunction {
+class SigmoidFunction extends ActivationFunction {
 
 	public double function(double x) {
 		return (1 / (1 + Math.exp(-x)));

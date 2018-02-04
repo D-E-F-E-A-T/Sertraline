@@ -1,5 +1,9 @@
 package io.github.ekardnam.sertraline.data;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class Matrix extends AbstractMatrix {
 
     protected int x;
@@ -67,6 +71,16 @@ public class Matrix extends AbstractMatrix {
     @Override
     public AbstractMatrix divide(double scalar) {
         return multiply(1 / scalar);
+    }
+
+    @Override
+    public AbstractVector multiply(AbstractVector vector) {
+        if (vector.getDimension() != y) throw new IllegalArgumentException("Illegal");
+        List<Double> newVec = new ArrayList();
+        for (AbstractVector row : rows()) {
+            newVec.add(row.dot(vector));
+        }
+        return new Vector(vector.getDimension(), (Double[]) newVec.toArray());
     }
 
     @Override

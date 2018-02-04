@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BuildPipeline implements Iterable<LayerDescriptor> {
 	
-	protected List<LayerDescriptor> pipeline = new ArrayList<LayerDescriptor>();
+	protected List<LayerDescriptor> pipeline = new ArrayList();
 	
 	public void add(@NotNull LayerDescriptor ld) {
 		pipeline.add(ld);

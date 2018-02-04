@@ -1,7 +1,7 @@
 package io.github.ekardnam.sertraline.activation;
 
 //step function implementation
-class StepFunction implements ActivationFunction {
+class StepFunction extends ActivationFunction {
 
 	public double function(double x) {
 		if (x > 0) {

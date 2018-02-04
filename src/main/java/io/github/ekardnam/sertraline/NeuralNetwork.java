@@ -2,14 +2,12 @@ package io.github.ekardnam.sertraline;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import io.github.ekardnam.sertraline.activation.ActivationFunction;
 import io.github.ekardnam.sertraline.builder.FeedForwardLinker;
 import io.github.ekardnam.sertraline.builder.LayerLinker;
-import io.github.ekardnam.sertraline.data.Matrix;
-import io.github.ekardnam.sertraline.data.Vector;
-import io.github.ekardnam.sertraline.data.VectorOperation;
+import io.github.ekardnam.sertraline.data.*;
 import io.github.ekardnam.sertraline.objects.Layer;
 import io.github.ekardnam.sertraline.objects.Neuron;
 
@@ -43,28 +41,15 @@ public class NeuralNetwork implements VectorOperation {
 
 	public Layer outputLayer() { return lastLayer(); };
 
-	public static boolean isADALIN(NeuralNetwork network) {
-		AtomicBoolean valid = new AtomicBoolean(true);
-		for (int i = 0; i < 2; i++) {
-			network.getLayers().get(i).forEach(neuron -> {
-				if (neuron.getActivationFunction() != ActivationFunction.LINEAR_FUNCTION) {
-					valid.set(false);
-					return;
-				}
-			});
-		}
-		return valid.get() && isPerceptron(network);
-	}
-
 	@Override
-	public Vector output(Vector input) {
+	public AbstractVector output(AbstractVector input) {
 		for (Layer l : layers) {
 			l.run();
 		}
 		return outputLayer().getOutput();
 	}
 
-	public Matrix getWeightsMatrix(int index) {
+	public AbstractMatrix getWeightsMatrix(int index) {
 		//TODO("Better illegal message")
 		if (index == 0 || index > layers.size() - 1) throw new IllegalArgumentException("Illegal");
 
@@ -72,16 +57,28 @@ public class NeuralNetwork implements VectorOperation {
 		Layer before = layers.get(index - 1);
 		if (!FeedForwardLinker.areLinkedFeedForwardly(before, layer)) return null;
 
-		List<Vector> weights = new ArrayList();
+		List<AbstractVector> weights = new ArrayList();
 		for (Neuron n : layer) {
 			weights.add(n.weights());
 		}
 
-		return new Matrix(before.getHowManyNeurons(), layer.getHowManyNeurons(), (Vector[]) weights.toArray());
+		return new Matrix(before.getHowManyNeurons(), layer.getHowManyNeurons(), (AbstractVector[]) weights.toArray());
+	}
+
+	public ActivationFunction getActivationFunction() {
+		AtomicReference<ActivationFunction> af = new AtomicReference(null);
+		layers.forEach(layer -> {
+			if (af.get() == null) af.set(layer.getActivationFunction());
+			if (layer.getActivationFunction() != af.get()) {
+				af.set(null);
+				return;
+			}
+		});
+		return af.get();
 	}
 
 	public static boolean isPerceptron(NeuralNetwork network) {
-		return network.getLayers().size() == 2 && isFeedForward(network);
+		return network.getLayers().size() == 2 && isFeedForward(network) && network.getActivationFunction() != null;
 	}
 
 
@@ -91,7 +88,10 @@ public class NeuralNetwork implements VectorOperation {
 			Layer after = network.getLayers().get(i);
 			if (!FeedForwardLinker.areLinkedFeedForwardly(before, after)) return false;
 		}
-		return true;
+		return network.getActivationFunction() != null;
 	}
 
+	public static boolean isADALINE(NeuralNetwork network) {
+		return network.getActivationFunction() == ActivationFunction.LINEAR_FUNCTION && isPerceptron(network);
+	}
 }

@@ -4,17 +4,17 @@ import com.sun.istack.internal.NotNull;
 
 public class DataUnit {
 
-	protected Vector inputs;
+	protected AbstractVector inputs;
 
-	protected Vector outputs;
+	protected AbstractVector outputs;
 	
-	public DataUnit(@NotNull Vector inputs, @NotNull Vector outputs) {
+	public DataUnit(@NotNull AbstractVector inputs, @NotNull AbstractVector outputs) {
 		this.inputs = inputs;
 		this.outputs = outputs;
 	}
 
-	public Vector getInputs() { return inputs; }
+	public AbstractVector getInputs() { return inputs; }
 
-	public Vector getOutputs() { return outputs; }
+	public AbstractVector getOutputs() { return outputs; }
 
 }

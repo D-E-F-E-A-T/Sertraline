@@ -2,8 +2,8 @@ package io.github.ekardnam.sertraline.learning;
 
 import com.sun.istack.internal.NotNull;
 import io.github.ekardnam.sertraline.NeuralNetwork;
+import io.github.ekardnam.sertraline.data.AbstractVector;
 import io.github.ekardnam.sertraline.data.DataProvider;
-import io.github.ekardnam.sertraline.data.Vector;
 
 public abstract class LearningAlgorithm {
 
@@ -19,7 +19,7 @@ public abstract class LearningAlgorithm {
 		algorithm(network, provider);
 	}
 
-	public static double quadraticError(Vector given, Vector expected) {
+	public static double quadraticError(AbstractVector given, AbstractVector expected) {
 		return expected.subtract(given).square();
 	}
 

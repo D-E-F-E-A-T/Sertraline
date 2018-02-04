@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.ekardnam.sertraline.activation.ActivationFunction;
+import io.github.ekardnam.sertraline.data.AbstractVector;
 import io.github.ekardnam.sertraline.data.Vector;
 
 //a class that represents a neuron
@@ -67,7 +68,7 @@ public class Neuron {
 		out = activationFunction.function(getPotential());
 	}
 
-	public Vector weights() {
+	public AbstractVector weights() {
 		List<Double> weights = new ArrayList();
 		for (Synapsis s : inLinks) {
 			weights.add(s.w);
@@ -75,7 +76,7 @@ public class Neuron {
 		return new Vector(inLinks.size(), (Double[]) weights.toArray());
 	}
 
-	public void setWeights(Vector weights) {
+	public void setWeights(AbstractVector weights) {
 		if (weights.getDimension() != inLinks.size()) throw new IllegalArgumentException("Must give as many weight as how many in links");
 		for (int i = 0; i < inLinks.size(); i++) {
 			inLinks.get(i).w = weights.get(i);

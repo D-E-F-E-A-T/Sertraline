@@ -1,10 +1,12 @@
 package io.github.ekardnam.sertraline.objects;
 
+import io.github.ekardnam.sertraline.activation.ActivationFunction;
+import io.github.ekardnam.sertraline.data.AbstractVector;
 import io.github.ekardnam.sertraline.data.Vector;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Layer implements Iterable<Neuron> {
 	
@@ -33,12 +35,24 @@ public class Layer implements Iterable<Neuron> {
 		}
 	}
 
-	public Vector getOutput() {
+	public AbstractVector getOutput() {
 		List<Double> outputs = new ArrayList();
 		for (Neuron n : neurons) {
 			outputs.add(n.getOutput());
 		}
 		return new Vector(outputs.size(), (Double[]) outputs.toArray());
+	}
+
+	public ActivationFunction getActivationFunction() {
+		AtomicReference<ActivationFunction> af = new AtomicReference(null);
+		neurons.forEach(neuron -> {
+			if (af.get() == null) af.set(neuron.getActivationFunction());
+			if (neuron.getActivationFunction() != af.get()) {
+				af.set(null);
+				return;
+			}
+		});
+		return af.get();
 	}
 
 }

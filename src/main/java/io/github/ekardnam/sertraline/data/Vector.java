@@ -21,15 +21,18 @@ public class Vector extends AbstractVector implements Iterable<Double> {
 		setArray(values);
 	}
 
+	@Override
 	public int getDimension() {
 		return dimension;
 	}
-	
+
+	@Override
 	public double get(int i) {
 		return values[i];
 	}
 
-	public Vector add(Vector other) {
+	@Override
+	public AbstractVector add(AbstractVector other) {
 		if (!hasEqualDimension(other)) throw new IllegalArgumentException("Vector must be equally sized");
 		double sum[] = new double[getDimension()];
 		for (int i = 0; i < getDimension(); i++) sum[i] = get(i) + other.get(i);
@@ -37,28 +40,30 @@ public class Vector extends AbstractVector implements Iterable<Double> {
 	}
 
 	@Override
-	public Vector multiply(double scalar) {
+	public AbstractVector multiply(double scalar) {
 		double newVec[] = new double[getDimension()];
 		for (int i = 0; i < getDimension(); i++) newVec[i] = scalar * get(i);
 		return new Vector(getDimension(), newVec);
 	}
 
-	public Vector subtract(Vector other) {
+	@Override
+	public AbstractVector subtract(AbstractVector other) {
 		return add(other.multiply(-1));
 	}
 
 	@Override
-	public AbstractVector add(AbstractVector other) {
-		return null;
+	public AbstractVector divide(double scalar) {
+		return multiply(1 / scalar);
 	}
 
 	@Override
-	public AbstractVector subtract(AbstractVector other) {
-		return null;
-	}
-
-	public Vector divide(double scalar) {
-		return multiply(1 / scalar);
+	public AbstractVector multiplyOneToOne(AbstractVector other) {
+		if (!hasEqualDimension(other)) throw new IllegalArgumentException("Vectors must be equally sized");
+		double newVec[] = new double[getDimension()];
+		for (int i = 0; i < getDimension(); i++) {
+			newVec[i] = get(i) + other.get(i);
+		}
+		return new Vector(getDimension(), newVec);
 	}
 
 	@Override
