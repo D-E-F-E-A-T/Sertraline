@@ -5,8 +5,6 @@ import io.github.ekardnam.sertraline.NeuralNetwork;
 import io.github.ekardnam.sertraline.data.DataProvider;
 import io.github.ekardnam.sertraline.data.Vector;
 
-import java.util.Iterator;
-
 public abstract class LearningAlgorithm {
 
 	protected abstract boolean init(@NotNull NeuralNetwork network);

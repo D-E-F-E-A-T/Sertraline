@@ -7,12 +7,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import io.github.ekardnam.sertraline.activation.ActivationFunction;
 import io.github.ekardnam.sertraline.builder.FeedForwardLinker;
 import io.github.ekardnam.sertraline.builder.LayerLinker;
-import io.github.ekardnam.sertraline.builder.NetworkBuilder;
-import io.github.ekardnam.sertraline.data.AbstractMatrix;
 import io.github.ekardnam.sertraline.data.Matrix;
 import io.github.ekardnam.sertraline.data.Vector;
 import io.github.ekardnam.sertraline.data.VectorOperation;
-import io.github.ekardnam.sertraline.learning.LearningAlgorithm;
 import io.github.ekardnam.sertraline.objects.Layer;
 import io.github.ekardnam.sertraline.objects.Neuron;
 
