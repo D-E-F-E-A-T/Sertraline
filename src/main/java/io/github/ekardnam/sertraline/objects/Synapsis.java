@@ -2,6 +2,7 @@ package io.github.ekardnam.sertraline.objects;
 
 /**
  * A class that represent a {@link Synapsis}
+ * @author Luca Bertozzi - ekardnam lucabertozzi.pub@gmail.com
  */
 public class Synapsis {
 
