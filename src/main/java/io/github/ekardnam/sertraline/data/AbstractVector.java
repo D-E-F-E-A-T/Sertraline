@@ -24,6 +24,10 @@ public abstract class AbstractVector implements Iterable<Double> {
 
     public abstract AbstractVector copy();
 
+    public abstract AbstractMatrix matrixify(int rows);
+
+    public abstract AbstractVector map(Function<Double, Double> map);
+
     public double square() {
         return dot(this);
     }
@@ -68,19 +72,4 @@ public abstract class AbstractVector implements Iterable<Double> {
             }
         };
     }
-
-    public AbstractVector map(Function<Double, Double> map) {
-        double newVec[] = new double[getDimension()];
-        for (int i = 0; i < getDimension(); i++) {
-            newVec[i] = map.apply(get(i));
-        }
-        return new Vector(getDimension(), newVec);
-    }
-
-    public AbstractMatrix matrixify(int rows) {
-        AbstractVector rowsVec[] = new AbstractVector[rows];
-        for (int i = 0; i < rows; i++) rowsVec[i] = copy();
-        return new Matrix(getDimension(), rows, rowsVec);
-    }
-
 }

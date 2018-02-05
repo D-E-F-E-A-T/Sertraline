@@ -27,44 +27,10 @@ public abstract class AbstractMatrix {
 
     public abstract AbstractMatrix copy();
 
-    public Iterable<AbstractVector> rows() {
-        return new Iterable<AbstractVector>() {
-            @Override
-            public Iterator<AbstractVector> iterator() {
-                return new Iterator<AbstractVector>() {
-                    private int index = 0;
+    public abstract Iterable<AbstractVector> rows();
 
-                    @Override
-                    public boolean hasNext() {
-                        return index < getYDimension();
-                    }
+    public abstract Iterable<AbstractVector> cols();
 
-                    @Override
-                    public AbstractVector next() {
-                        double vector[] = new double[getXDimension()];
-                        for (int i = 0; i < getXDimension(); i++) {
-                            vector[i] = get(i, index);
-                        }
-                        index++;
-                        return new Vector(getXDimension(), vector);
-                    }
-                };
-            }
-        };
-    }
-
-    public Iterable<AbstractVector> cols() {
-        return transpose().rows();
-    }
-
-    public AbstractMatrix map(Function<Double, Double> map) {
-        double newMat[][] = new double[getXDimension()][getYDimension()];
-        for (int i = 0; i < getXDimension(); i++) {
-            for (int j = 0; j < getYDimension(); j++) {
-                newMat[i][j] = map.apply(get(i, j));
-            }
-        }
-        return new Matrix(getXDimension(), getYDimension(), newMat);
-    }
+    public abstract AbstractMatrix map(Function<Double, Double> map);
 
 }

@@ -1,5 +1,7 @@
 package io.github.ekardnam.sertraline.data;
 
+import java.util.function.Function;
+
 public class Vector extends AbstractVector implements Iterable<Double> {
 	
 	protected int dimension;
@@ -66,13 +68,6 @@ public class Vector extends AbstractVector implements Iterable<Double> {
 		return 0;
 	}
 
-	public double dot(Vector other) {
-		if (!hasEqualDimension(other)) throw new IllegalArgumentException("Vectors must be equally sized");
-		double result = 0;
-		for (int i = 0; i < getDimension(); i++) result += get(i) * other.get(i);
-		return result;
-	}
-
 	@Override
 	public double length() {
 		return Math.sqrt(square());
@@ -87,6 +82,23 @@ public class Vector extends AbstractVector implements Iterable<Double> {
 	public AbstractVector copy() {
 		return new Vector(getDimension(), values);
 	}
+
+	@Override
+	public AbstractVector map(Function<Double, Double> map) {
+		double newVec[] = new double[getDimension()];
+		for (int i = 0; i < getDimension(); i++) {
+			newVec[i] = map.apply(get(i));
+		}
+		return new Vector(getDimension(), newVec);
+	}
+
+	@Override
+	public AbstractMatrix matrixify(int rows) {
+		AbstractVector rowsVec[] = new AbstractVector[rows];
+		for (int i = 0; i < rows; i++) rowsVec[i] = copy();
+		return new Matrix(getDimension(), rows, rowsVec);
+	}
+
 
 	protected void setArray(double values[]) {
 		if (values.length != dimension) throw new IllegalArgumentException("Array must have vector size");

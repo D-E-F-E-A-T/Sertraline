@@ -116,7 +116,7 @@ public class NeuralNetwork implements VectorOperation {
 		AtomicReference<ActivationFunction> af = new AtomicReference(null);
 		layers.forEach(layer -> {
 			if (af.get() == null) af.set(layer.getActivationFunction());
-			if (layer.getActivationFunction() != af.get()) {
+			if (!layer.getActivationFunction().getClass().equals(af.get().getClass())) {
 				af.set(null);
 				return;
 			}

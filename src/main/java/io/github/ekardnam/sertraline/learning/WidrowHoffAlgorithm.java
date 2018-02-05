@@ -46,26 +46,12 @@ public class WidrowHoffAlgorithm extends LearningAlgorithm {
 	protected void algorithm(@NotNull NeuralNetwork network, DataProvider provider) {
 		int howManyOutputs = network.outputLayer().getHowManyNeurons();
 		Function<AbstractVector, AbstractVector> derivative;
-		if (network.getActivationFunction().derivable()) {
-			derivative = v -> network.getActivationFunction().derivative(v);
-		} else {
-			derivative = v -> v.map(value -> (double) 1);
-		}
+		if (network.getActivationFunction().derivable()) derivative = v -> network.getActivationFunction().derivative(v);
+		else derivative = v -> v.map(value -> (double) 1);
 		for (int epoch = 0; epoch < maxEpochs; epoch++) {
 			for (DataUnit data : provider) {
-				AbstractVector output = network.output(data.getInputs());
-				AbstractMatrix gradient = output.matrixify(howManyOutputs)
-						.subtract(data.getOutputs().matrixify(howManyOutputs))
-						.multiplyOneToOne(derivative.apply(output).matrixify(howManyOutputs)).transpose();
-				int i = 0;
-				for (AbstractVector variation : gradient.rows()) {
-					Neuron n = network.outputLayer().get(i);
-					AbstractVector weights = n.weights();
-					AbstractVector delta = variation.multiply(-learningRate);
-					n.setWeights(weights.add(delta));
-					i++;
-				}
-				if (LearningAlgorithm.quadraticError(output, data.getOutputs()) <= target) return;
+				//TODO("Implement")
+				if (LearningAlgorithm.quadraticError(data.getOutputs(), data.getOutputs()) <= target) return;
 			}
 		}
 	}
