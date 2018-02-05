@@ -9,6 +9,7 @@ import io.github.ekardnam.sertraline.data.Vector;
 
 /**
  * A class that represents a {@link Neuron}
+ * @author Luca Bertozzi - ekardnam lucabertozzi.pub@gmail.com
  */
 public class Neuron {
 
@@ -104,13 +105,13 @@ public class Neuron {
 
 	/**
 	 * Returns the output value of this neuron
-	 * To be set you have to call {@link Neuron#run()}
-	 * @return the output {@link Neuron#out}
+	 * To be set you have to call {@link #run()}
+	 * @return the output {@link #out}
 	 */
 	public double getOutput() { return out; }
 
 	/**
-	 * Calculates and sets {@link Neuron#out}
+	 * Calculates and sets {@link #out}
 	 */
 	public void run() {
 		out = activationFunction.function(getPotential());

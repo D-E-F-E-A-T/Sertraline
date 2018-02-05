@@ -22,9 +22,9 @@ public class Synapsis {
 
 	/**
 	 * Constructs a synapsis
-	 * @param from {@link Synapsis#from}
-	 * @param to {@link Synapsis#to}
-	 * @param w {@link Synapsis#w}
+	 * @param from {@link #from}
+	 * @param to {@link #to}
+	 * @param w {@link #w}
 	 */
 	public Synapsis(Neuron from, Neuron to, double w) {
 		this.from = from;
@@ -34,8 +34,8 @@ public class Synapsis {
 
 	/**
 	 * Constructs a synapsis
-	 * @param from {@link Synapsis#from}
-	 * @param to {@link Synapsis#to}
+	 * @param from {@link #from}
+	 * @param to {@link #to}
 	 */
 	public Synapsis(Neuron from, Neuron to) {
 		this.from = from;

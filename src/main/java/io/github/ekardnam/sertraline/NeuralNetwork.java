@@ -22,7 +22,7 @@ public class NeuralNetwork implements VectorOperation {
 	protected List<Layer> layers;
 
 	/**
-	 * When calling {@link NeuralNetwork#addLayer(Layer)} the previous layer will be linked to it using this
+	 * When calling {@link #addLayer(Layer)} the previous layer will be linked to it using this
 	 */
 	protected LayerLinker linkToNextLinker;
 
@@ -46,14 +46,14 @@ public class NeuralNetwork implements VectorOperation {
 	}
 
 	/**
-	 * When calling {@link NeuralNetwork#addLayer(Layer)} the previous layer will be linked to it using this
+	 * When calling {@link #addLayer(Layer)} the previous layer will be linked to it using this
 	 * @param linkToNextLinker {@link LayerLinker} linker to link with
 	 */
 	public void linkToNextWith(LayerLinker linkToNextLinker) { this.linkToNextLinker = linkToNextLinker; }
 
 	/**
-	 * Returns the last elemtent of {@link NeuralNetwork#layers}
-	 * @return last element of {@link NeuralNetwork#layers}
+	 * Returns the last elemtent of {@link #layers}
+	 * @return last element of {@link #layers}
 	 */
 	private Layer lastLayer() {
 		return layers.get(layers.size() - 1);
@@ -61,16 +61,20 @@ public class NeuralNetwork implements VectorOperation {
 
 	/**
 	 * Layers of the network
-	 * @return return {@link NeuralNetwork#layers}
+	 * @return return {@link #layers}
 	 */
 	public List<Layer> getLayers() { return layers; }
 
 	/**
-	 * Gets tho output layer of the network
+	 * Gets the output layer of the network
 	 * @return output {@link Layer} of the network
 	 */
 	public Layer outputLayer() { return lastLayer(); };
 
+	/**
+	 * Gets the network input layer
+	 * @return input {@link Layer} of the network
+	 */
 	public Layer inputLayer() { return layers.get(0); }
 
 	/**
