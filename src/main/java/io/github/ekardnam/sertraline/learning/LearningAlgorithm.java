@@ -22,16 +22,16 @@ public abstract class LearningAlgorithm {
 	 * @param network the {@link NeuralNetwork} to be trained
 	 * @param provider the {@link DataProvider} that provides data to train the network
 	 */
-	protected abstract void algorithm(@NotNull NeuralNetwork network, DataProvider provider);
+	protected abstract boolean algorithm(@NotNull NeuralNetwork network, DataProvider provider);
 	
 	/**
 	 * Trains the neural network
 	 * @param network the {@link NeuralNetwork} to be trained
 	 * @param provider the {@link DataProvider} that provides data to train the network
 	 */
-	public void train(@NotNull NeuralNetwork network, DataProvider provider) {
-		if (!init(network)) return;
-		algorithm(network, provider);
+	public boolean train(@NotNull NeuralNetwork network, DataProvider provider) {
+		if (!init(network)) return false;
+		return algorithm(network, provider);
 	}
 
 	/**

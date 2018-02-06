@@ -15,13 +15,9 @@ public class BiasSynapsis extends Synapsis {
         super(null, to, theta);
     }
 
-    /**
-     * Overrides {@link Synapsis#getPotential()}
-     * @return See {@link Synapsis#getPotential()}
-     */
     @Override
-    public double getPotential() {
-        return -w;
+    public double getInput() {
+        return -1;
     }
 
 }

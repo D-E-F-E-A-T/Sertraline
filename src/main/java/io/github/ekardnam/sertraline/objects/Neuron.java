@@ -6,6 +6,7 @@ import java.util.List;
 import io.github.ekardnam.sertraline.activation.ActivationFunction;
 import io.github.ekardnam.sertraline.data.AbstractVector;
 import io.github.ekardnam.sertraline.data.Vector;
+import javafx.util.Pair;
 
 /**
  * A class that represents a {@link Neuron}
@@ -38,8 +39,8 @@ public class Neuron {
 	 * @param activationFunction the {@link ActivationFunction}
 	 */
 	public Neuron(ActivationFunction activationFunction) {
-		inLinks = new ArrayList();
-		outLinks = new ArrayList();
+		inLinks = new ArrayList<>();
+		outLinks = new ArrayList<>();
 		this.activationFunction = activationFunction;
 	}
 
@@ -122,15 +123,23 @@ public class Neuron {
 	 * @return {@link AbstractVector} weights' vector
 	 */
 	public AbstractVector weights() {
-		List<Double> weights = new ArrayList();
+		List<Double> weights = new ArrayList<>();
 		for (Synapsis s : inLinks) {
 			weights.add(s.w);
 		}
 		return new Vector(inLinks.size(), weights.stream().mapToDouble(value -> value).toArray());
 	}
 
+	public AbstractVector inputs() {
+		List<Double> inputs = new ArrayList<>();
+		for (Synapsis s : inLinks) {
+			inputs.add(s.getInput());
+		}
+		return new Vector(inLinks.size(), inputs.stream().mapToDouble(value -> value).toArray());
+	}
+
 	/**
-	 * Sets the weights' vecoter
+	 * Sets the weights' vector
 	 * @param weights {@link AbstractVector} weights' vector
 	 */
 	public void setWeights(AbstractVector weights) {
@@ -138,6 +147,13 @@ public class Neuron {
 		for (int i = 0; i < inLinks.size(); i++) {
 			inLinks.get(i).w = weights.get(i);
 		}
+	}
+
+	/**
+	 *
+	 */
+	public Pair<AbstractVector, AbstractVector> getWeightInputPair() {
+		return new Pair<>(inputs(), weights());
 	}
 
 	/**

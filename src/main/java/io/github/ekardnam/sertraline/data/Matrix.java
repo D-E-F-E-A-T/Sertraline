@@ -7,56 +7,56 @@ import java.util.function.Function;
 
 public class Matrix extends AbstractMatrix {
 
-    protected int x;
+    protected int rowDimension;
 
-    protected int y;
+    protected int colDimension;
 
     protected double values[][];
 
-    public Matrix(int x, int y) {
-        this.x = x;
-        this.y = y;
-        values = new double[x][y];
+    public Matrix(int rowDimension, int colDimension) {
+        this.rowDimension = rowDimension;
+        this.colDimension = colDimension;
+        values = new double[rowDimension][colDimension];
+        for (int i = 0; i < rowDimension; i++) for (int j = 0; j < colDimension; j++) values[i][j] = 0;
     }
 
-    public Matrix(int x, int y, double values[][]) {
-       this(x, y);
+    public Matrix(int rowDimension, int colDimension, double values[][]) {
+       this(rowDimension, colDimension);
         setArray(values);
     }
 
-    public Matrix(int x, int y,  AbstractVector rows[]) {
+    public Matrix(int rowDimension, int colDimension, AbstractVector rows[]) {
         //TODO("Better illegal messages")
-        if (rows.length != y) throw new IllegalArgumentException("Illegal");
-        for (int i = 0; i < rows.length; i++) if (rows[i].getDimension() != x) throw new IllegalArgumentException("Illegal");
-
-        this.x = x;
-        this.y = y;
-        values = new double[x][y];
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                values[i][j] = rows[i].get(j);
+        if (rows.length != colDimension) throw new IllegalArgumentException("Illegal");
+        for (int i = 0; i < rows.length; i++) if (rows[i].getDimension() != rowDimension) throw new IllegalArgumentException("Illegal");
+        this.rowDimension = rowDimension;
+        this.colDimension = colDimension;
+        values = new double[rowDimension][colDimension];
+        for (int i = 0; i < rowDimension; i++) {
+            for (int j = 0; j < colDimension; j++) {
+                values[i][j] = rows[j].get(i);
             }
         }
     }
 
     @Override
-    public int getXDimension() { return x; }
+    public int getRowDimension() { return rowDimension; }
 
     @Override
-    public int getYDimension() { return y; }
+    public int getColDimension() { return colDimension; }
 
     @Override
     public AbstractMatrix add(AbstractMatrix other) {
-        double newMat[][] = new double[getXDimension()][getYDimension()];
-        for (int i = 0; i < getXDimension(); i++) for (int j = 0; j < getYDimension(); j++) newMat[i][j] = get(i, j) + other.get(i, j);
-        return new Matrix(getXDimension(), getYDimension(), newMat);
+        double newMat[][] = new double[getRowDimension()][getColDimension()];
+        for (int i = 0; i < getRowDimension(); i++) for (int j = 0; j < getColDimension(); j++) newMat[i][j] = get(i, j) + other.get(i, j);
+        return new Matrix(getRowDimension(), getColDimension(), newMat);
     }
 
     @Override
     public AbstractMatrix multiply(double scalar) {
-        double newMat[][] = new double[getXDimension()][getYDimension()];
-        for (int i = 0; i < getXDimension(); i++) for (int j = 0; j < getYDimension(); j++) newMat[i][j] = scalar * get(i, j);
-        return new Matrix(getXDimension(), getYDimension(), newMat);
+        double newMat[][] = new double[getRowDimension()][getColDimension()];
+        for (int i = 0; i < getRowDimension(); i++) for (int j = 0; j < getColDimension(); j++) newMat[i][j] = scalar * get(i, j);
+        return new Matrix(getRowDimension(), getColDimension(), newMat);
     }
 
     @Override
@@ -71,37 +71,49 @@ public class Matrix extends AbstractMatrix {
 
     @Override
     public AbstractVector multiply(AbstractVector vector) {
-        if (vector.getDimension() != y) throw new IllegalArgumentException("Illegal");
-        List<Double> newVec = new ArrayList();
+        if (vector.getDimension() != rowDimension) throw new IllegalArgumentException("Illegal");
+        List<Double> newVec = new ArrayList<>();
         for (AbstractVector row : rows()) {
             newVec.add(row.dot(vector));
         }
-        return new Vector(vector.getDimension(), newVec.stream().mapToDouble(value -> value).toArray());
+        return new Vector(howManyRows(), newVec.stream().mapToDouble(value -> value).toArray());
+    }
+
+    @Override
+    public AbstractMatrix multiply(AbstractMatrix other) {
+        if (getRowDimension() != other.getColDimension()) throw new IllegalArgumentException("Illegal");
+        double newMat[][] = new double[howManyRows()][other.howManyCols()];
+        for (int i = 0; i < howManyRows(); i++) {
+            for (int j = 0; j < other.howManyCols(); j++) {
+                newMat[i][j] = getRow(i).dot(other.getCol(j));
+            }
+        }
+        return new Matrix(howManyRows(), other.howManyCols(), newMat);
     }
 
     @Override
     public AbstractMatrix multiplyOneToOne(AbstractMatrix other) {
-        if (getXDimension() != other.getXDimension() && getYDimension() != other.getYDimension()) throw new IllegalArgumentException("Illegal");
-        double newMat[][] = new double[getXDimension()][getYDimension()];
-        for (int i = 0; i <getXDimension(); i++) for (int j = 0; j < getYDimension(); j++) newMat[i][j] = get(i, j) * other.get(i, j);
-        return new Matrix(getXDimension(), getYDimension(), newMat);
+        if (getRowDimension() != other.getRowDimension() && getColDimension() != other.getColDimension()) throw new IllegalArgumentException("Illegal");
+        double newMat[][] = new double[getRowDimension()][getColDimension()];
+        for (int i = 0; i < getRowDimension(); i++) for (int j = 0; j < getColDimension(); j++) newMat[i][j] = get(i, j) * other.get(i, j);
+        return new Matrix(getRowDimension(), getColDimension(), newMat);
     }
 
     @Override
-    public double get(int i, int j) {
-        return values[i][j];
+    public double get(int row, int col) {
+        return values[row][col];
     }
 
     @Override
     public AbstractMatrix transpose() {
-        double newMat[][] = new double[getXDimension()][getYDimension()];
-        for (int i = 0; i < getXDimension(); i++) for (int j = 0; j < getYDimension(); j++) newMat[j][i] = get(i, j);
-        return new Matrix(getXDimension(), getYDimension(), newMat);
+        double newMat[][] = new double[getColDimension()][getRowDimension()];
+        for (int i = 0; i < getRowDimension(); i++) for (int j = 0; j < getColDimension(); j++) newMat[j][i] = get(i, j);
+        return new Matrix(getColDimension(), getRowDimension(), newMat);
     }
 
     @Override
     public AbstractMatrix copy() {
-        return new Matrix(x, y, values);
+        return new Matrix(rowDimension, colDimension, values);
     }
 
     @Override
@@ -114,21 +126,33 @@ public class Matrix extends AbstractMatrix {
 
                     @Override
                     public boolean hasNext() {
-                        return index < getYDimension();
+                        return index < getColDimension();
                     }
 
                     @Override
                     public AbstractVector next() {
-                        double vector[] = new double[getXDimension()];
-                        for (int i = 0; i < getXDimension(); i++) {
-                            vector[i] = get(i, index);
-                        }
+                        AbstractVector vector = getRow(index);
                         index++;
-                        return new Vector(getXDimension(), vector);
+                        return vector;
                     }
                 };
             }
         };
+    }
+
+    @Override
+    public AbstractVector getRow(int index) {
+        double vector[] = new double[getRowDimension()];
+        for (int i = 0; i < getRowDimension(); i++) {
+            vector[i] = get(i, index);
+        }
+        index++;
+        return new Vector(getRowDimension(), vector);
+    }
+
+    @Override
+    public AbstractVector getCol(int index) {
+        return transpose().getRow(index);
     }
 
     @Override
@@ -138,25 +162,25 @@ public class Matrix extends AbstractMatrix {
 
     @Override
     public AbstractMatrix map(Function<Double, Double> map) {
-        double newMat[][] = new double[getXDimension()][getYDimension()];
-        for (int i = 0; i < getXDimension(); i++) {
-            for (int j = 0; j < getYDimension(); j++) {
+        double newMat[][] = new double[getRowDimension()][getColDimension()];
+        for (int i = 0; i < getRowDimension(); i++) {
+            for (int j = 0; j < getColDimension(); j++) {
                 newMat[i][j] = map.apply(get(i, j));
             }
         }
-        return new Matrix(getXDimension(), getYDimension(), newMat);
+        return new Matrix(getRowDimension(), getColDimension(), newMat);
     }
 
     private void setArray(double values[][]) {
-        if (values.length != x) throw new IllegalArgumentException("Illegal values");
-        if (values[0].length != y) throw new IllegalArgumentException("Illegal values");
-        for (int i = 0; i < x; i++) for (int j = 0; j < y; j++) this.values[i][j] = values[i][j];
+        if (values.length != rowDimension) throw new IllegalArgumentException("Illegal values");
+        if (values[0].length != colDimension) throw new IllegalArgumentException("Illegal values");
+        for (int i = 0; i < rowDimension; i++) for (int j = 0; j < colDimension; j++) this.values[i][j] = values[i][j];
     }
 
     private void setArray(Double values[][]) {
-        if (values.length != x) throw new IllegalArgumentException("Illegal values");
-        if (values[0].length != y) throw new IllegalArgumentException("Illegal values");
-        for (int i = 0; i < x; i++) for (int j = 0; j < y; j++) this.values[i][j] = values[i][j];
+        if (values.length != rowDimension) throw new IllegalArgumentException("Illegal values");
+        if (values[0].length != colDimension) throw new IllegalArgumentException("Illegal values");
+        for (int i = 0; i < rowDimension; i++) for (int j = 0; j < colDimension; j++) this.values[i][j] = values[i][j];
     }
 
 }

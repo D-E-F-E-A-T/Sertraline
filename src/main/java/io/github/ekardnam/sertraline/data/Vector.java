@@ -9,13 +9,19 @@ public class Vector extends AbstractVector implements Iterable<Double> {
 	protected double values[];
 	
 	public Vector(int dimension) {
-		this.dimension = dimension;
-		values = new double[dimension];
+		this(dimension, i -> (double) 0);
 	}
 	
 	public Vector(int dimension, double values[]) {
-		this(dimension);
-		setArray(values);
+		this(dimension, i -> values[i]);
+	}
+
+	public Vector(int dimension, Function<Integer, Double> init) {
+		this.dimension = dimension;
+		values = new double[dimension];
+		for (int i = 0; i < dimension; i++) {
+			values[i] = init.apply(i);
+		}
 	}
 
 	@Override
@@ -99,14 +105,4 @@ public class Vector extends AbstractVector implements Iterable<Double> {
 		return new Matrix(getDimension(), rows, rowsVec);
 	}
 
-
-	protected void setArray(double values[]) {
-		if (values.length != dimension) throw new IllegalArgumentException("Array must have vector size");
-		System.arraycopy(values, 0, this.values, 0, dimension);
-	}
-
-	protected void setArray(Double values[]) {
-		if (values.length != dimension) throw new IllegalArgumentException("Array must have vector size");
-		for (int i = 0; i < dimension; i++) this.values[i] = values[i];
-	}
 }

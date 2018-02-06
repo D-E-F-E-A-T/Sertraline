@@ -1,6 +1,6 @@
 package io.github.ekardnam.sertraline.data;
 
-import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -38,13 +38,19 @@ public abstract class AbstractMatrix implements VectorOperation {
 
     public abstract AbstractVector multiply(AbstractVector vector);
 
+    public abstract AbstractMatrix multiply(AbstractMatrix other);
+
     public abstract AbstractMatrix multiplyOneToOne(AbstractMatrix other);
 
-    public abstract double get(int i, int j);
+    public abstract double get(int row, int col);
 
-    public abstract int getXDimension();
+    public abstract int getRowDimension();
 
-    public abstract int getYDimension();
+    public abstract int getColDimension();
+
+    public int howManyRows() { return getColDimension(); }
+
+    public int howManyCols() { return getRowDimension(); }
 
     public abstract AbstractMatrix transpose();
 
@@ -55,6 +61,26 @@ public abstract class AbstractMatrix implements VectorOperation {
     public abstract Iterable<AbstractVector> cols();
 
     public abstract AbstractMatrix map(Function<Double, Double> map);
+
+    public abstract AbstractVector getRow(int index);
+
+    public abstract AbstractVector getCol(int index);
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof AbstractMatrix)) return false;
+        AbstractMatrix other = (AbstractMatrix) object;
+        if (getRowDimension() != other.getRowDimension() || getColDimension() != other.getColDimension()) return false;
+        for (int i = 0; i < howManyRows(); i++) {
+            if (!getRow(i).equals(other.getRow(i))) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this);
+    }
 
     @Override
     public AbstractVector output(AbstractVector input) {

@@ -42,7 +42,7 @@ public abstract class AbstractVector implements Iterable<Double> {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Vector)) return false;
+        if (!(object instanceof AbstractVector)) return false;
         AbstractVector other = (AbstractVector) object;
         if (hasEqualDimension(other)) return false;
         for (int i = 0; i < getDimension(); i++) if (get(i) != other.get(i)) return false;

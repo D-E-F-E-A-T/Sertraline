@@ -30,7 +30,7 @@ public class NeuralNetwork implements VectorOperation {
 	 * Constructs a neural network
 	 */
 	public NeuralNetwork() {
-		layers = new ArrayList();
+		layers = new ArrayList<>();
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class NeuralNetwork implements VectorOperation {
 		Layer before = layers.get(index - 1);
 		if (!FeedForwardLinker.areLinkedFeedForwardly(before, layer)) return null;
 
-		List<AbstractVector> weights = new ArrayList();
+		List<AbstractVector> weights = new ArrayList<>();
 		for (Neuron n : layer) {
 			weights.add(n.weights());
 		}
@@ -117,7 +117,7 @@ public class NeuralNetwork implements VectorOperation {
 	 * @return the activation function if unique else null
 	 */
 	public ActivationFunction getActivationFunction() {
-		AtomicReference<ActivationFunction> af = new AtomicReference(null);
+		AtomicReference<ActivationFunction> af = new AtomicReference<>(null);
 		layers.forEach(layer -> {
 			if (af.get() == null) af.set(layer.getActivationFunction());
 			if (!layer.getActivationFunction().getClass().equals(af.get().getClass())) {

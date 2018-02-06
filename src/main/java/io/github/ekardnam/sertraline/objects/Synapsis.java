@@ -47,7 +47,9 @@ public class Synapsis {
 	 * @return the potential
 	 */
 	public double getPotential() {
-		return from.out * w;
+		return getInput() * w;
 	}
+
+	public double getInput() { return from.out; }
 
 }

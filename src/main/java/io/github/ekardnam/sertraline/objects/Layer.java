@@ -23,7 +23,7 @@ public class Layer implements Iterable<Neuron> {
 	 * Constructs a new empty layer
 	 */
 	public Layer() {
-		neurons = new ArrayList();
+		neurons = new ArrayList<>();
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class Layer implements Iterable<Neuron> {
 	 * @return an {@link AbstractVector} containing the output
 	 */
 	public AbstractVector getOutput() {
-		List<Double> outputs = new ArrayList();
+		List<Double> outputs = new ArrayList<>();
 		for (Neuron n : neurons) {
 			outputs.add(n.getOutput());
 		}
@@ -84,7 +84,7 @@ public class Layer implements Iterable<Neuron> {
 	 * @return the {@link ActivationFunction} if unique else null
 	 */
 	public ActivationFunction getActivationFunction() {
-		AtomicReference<ActivationFunction> af = new AtomicReference(null);
+		AtomicReference<ActivationFunction> af = new AtomicReference<>(null);
 		neurons.forEach(neuron -> {
 			if (af.get() == null) af.set(neuron.getActivationFunction());
 			if (neuron.getActivationFunction() != af.get()) {

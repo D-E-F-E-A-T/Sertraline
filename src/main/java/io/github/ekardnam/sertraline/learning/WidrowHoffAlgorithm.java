@@ -4,7 +4,12 @@ import com.sun.istack.internal.NotNull;
 import io.github.ekardnam.sertraline.NeuralNetwork;
 import io.github.ekardnam.sertraline.data.*;
 import io.github.ekardnam.sertraline.objects.Neuron;
+import javafx.util.Pair;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 
 public class WidrowHoffAlgorithm extends LearningAlgorithm {
@@ -43,17 +48,38 @@ public class WidrowHoffAlgorithm extends LearningAlgorithm {
 	}
 
 	@Override
-	protected void algorithm(@NotNull NeuralNetwork network, DataProvider provider) {
+	protected boolean algorithm(@NotNull NeuralNetwork network, DataProvider provider) {
+		int howManyInputs = network.inputLayer().getHowManyNeurons();
 		int howManyOutputs = network.outputLayer().getHowManyNeurons();
-		Function<AbstractVector, AbstractVector> derivative;
-		if (network.getActivationFunction().derivable()) derivative = v -> network.getActivationFunction().derivative(v);
-		else derivative = v -> v.map(value -> (double) 1);
-		for (int epoch = 0; epoch < maxEpochs; epoch++) {
-			for (DataUnit data : provider) {
-				//TODO("Implement")
-				if (LearningAlgorithm.quadraticError(data.getOutputs(), data.getOutputs()) <= target) return;
-			}
+
+		if (howManyInputs != provider.howManyInputs() && howManyOutputs != provider.howManyOutputs()) {
+			throw new IllegalArgumentException("Wrong data provided");
 		}
+
+		Function<Double, Double> derivative;
+		if (network.getActivationFunction().derivable()) derivative = v -> network.getActivationFunction().derivative(v);
+		else derivative = v -> (double) 1;
+		for (int epoch = 0; epoch < maxEpochs; epoch++) {
+			double epochError = 0;
+			AbstractVector[] gradient = new AbstractVector[howManyOutputs];
+			for (int i = 0; i < howManyOutputs; i++) gradient[i] = new Vector(howManyInputs + 1);
+			for (DataUnit data : provider) {
+				AbstractVector output = network.output(data.getInputs());
+				AbstractVector error = data.getOutputs().subtract(output);
+				for (int i = 0; i < howManyOutputs; i++) {
+					Neuron n = network.outputLayer().get(i);
+					gradient[i] = gradient[i].add(n.inputs().multiply(error.get(i) * derivative.apply(n.getOutput())));
+				}
+			}
+			for (int i = 0; i < howManyOutputs; i++) {
+				Neuron n = network.outputLayer().get(i);
+				AbstractVector weights = n.weights();
+				AbstractVector delta = gradient[i].multiply(-learningRate);
+				n.setWeights(weights.add(delta));
+			}
+			if (epochError <= target) return true;
+		}
+		return false;
 	}
 
 }

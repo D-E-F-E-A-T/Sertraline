@@ -13,7 +13,7 @@ public class BackpropagationAlgorithm extends LearningAlgorithm {
 	}
 
 	@Override
-	public void algorithm(@NotNull NeuralNetwork network, DataProvider provider) {
-
+	public boolean algorithm(@NotNull NeuralNetwork network, DataProvider provider) {
+		return false;
 	}
 }

@@ -35,11 +35,22 @@ public class ArrayProvider implements DataProvider {
 	}
 
 	@Override
+	public int howManyInputs() {
+		return inputDim;
+	}
+
+	@Override
+	public int howManyOutputs() {
+		return outputDim;
+	}
+
+	@Override
 	public DataUnit getNext() {
 		double input[] = new double[inputDim];
 		double output[] = new double[outputDim];
 		System.arraycopy(inputs, (i * inputDim) % inputs.length, input, 0, inputDim);
 		System.arraycopy(outputs, (i * outputDim) % outputs.length, output, 0, outputDim);
+		i = (i + 1) % howManyUnits();
 		return new DataUnit(new Vector(inputDim, input), new Vector(outputDim, output));
 	}
 
