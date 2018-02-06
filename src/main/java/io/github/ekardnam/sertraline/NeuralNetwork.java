@@ -13,6 +13,7 @@ import io.github.ekardnam.sertraline.objects.Neuron;
 
 /**
  * A class that represents a {@link NeuralNetwork}
+ * @author Luca Bertozzi - ekardnam lucabertozzi.pub@gmail.com
  */
 public class NeuralNetwork implements VectorOperation {
 
