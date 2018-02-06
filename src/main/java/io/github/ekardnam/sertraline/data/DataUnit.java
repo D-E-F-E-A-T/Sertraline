@@ -17,4 +17,9 @@ public class DataUnit {
 
 	public AbstractVector getOutputs() { return outputs; }
 
+	@Override
+	public String toString() {
+		return "DataUnit: \n\tinput: " + inputs + "\n\toutput: " + outputs;
+	}
+
 }

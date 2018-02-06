@@ -4,17 +4,12 @@ import com.sun.istack.internal.NotNull;
 import io.github.ekardnam.sertraline.NeuralNetwork;
 import io.github.ekardnam.sertraline.data.*;
 import io.github.ekardnam.sertraline.objects.Neuron;
-import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import java.util.function.Function;
 
 public class WidrowHoffAlgorithm extends LearningAlgorithm {
 
-	public static final double DEFAULT_LEARNING_RATE = 0.005;
+	public static final double DEFAULT_LEARNING_RATE = 0.5;
 	public static final double DEFAULT_TARGET = 0.01;
 	public static final int DEFAULT_MAX_EPOCHS = 1024;
 
@@ -66,6 +61,7 @@ public class WidrowHoffAlgorithm extends LearningAlgorithm {
 			for (DataUnit data : provider) {
 				AbstractVector output = network.output(data.getInputs());
 				AbstractVector error = data.getOutputs().subtract(output);
+				epochError += LearningAlgorithm.quadraticError(output, data.getOutputs());
 				for (int i = 0; i < howManyOutputs; i++) {
 					Neuron n = network.outputLayer().get(i);
 					gradient[i] = gradient[i].add(n.inputs().multiply(error.get(i) * derivative.apply(n.getOutput())));
@@ -74,7 +70,7 @@ public class WidrowHoffAlgorithm extends LearningAlgorithm {
 			for (int i = 0; i < howManyOutputs; i++) {
 				Neuron n = network.outputLayer().get(i);
 				AbstractVector weights = n.weights();
-				AbstractVector delta = gradient[i].multiply(-learningRate);
+				AbstractVector delta = gradient[i].multiply(learningRate);
 				n.setWeights(weights.add(delta));
 			}
 			if (epochError <= target) return true;

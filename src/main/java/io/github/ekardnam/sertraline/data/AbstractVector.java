@@ -29,7 +29,7 @@ public abstract class AbstractVector implements Iterable<Double> {
     public abstract AbstractVector map(Function<Double, Double> map);
 
     public double square() {
-        return dot(this);
+        return dot(copy());
     }
 
     public double length() {
@@ -72,4 +72,17 @@ public abstract class AbstractVector implements Iterable<Double> {
             }
         };
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+        for (double d : this) {
+            sb.append(d + ", ");
+        }
+        sb.delete(sb.length() - 2, sb.length());
+        sb.append(")");
+        return sb.toString();
+    }
+
 }

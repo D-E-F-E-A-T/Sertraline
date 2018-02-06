@@ -86,9 +86,7 @@ public class NeuralNetwork implements VectorOperation {
 	@Override
 	public AbstractVector output(AbstractVector input) {
 		inputLayer().loadInputs(input);
-		for (Layer l : layers) {
-			l.run();
-		}
+		for (int i = 1; i < layers.size(); i++) layers.get(i).run();
 		return outputLayer().getOutput();
 	}
 

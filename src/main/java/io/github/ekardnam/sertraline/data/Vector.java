@@ -71,17 +71,15 @@ public class Vector extends AbstractVector implements Iterable<Double> {
 
 	@Override
 	public double dot(AbstractVector other) {
-		return 0;
+		if (getDimension() != other.getDimension()) throw new IllegalArgumentException("Illegal");
+		double dot = 0;
+		for (int i = 0; i < getDimension(); i++) dot += get(i) * other.get(i);
+		return dot;
 	}
 
 	@Override
 	public double length() {
 		return Math.sqrt(square());
-	}
-
-	@Override
-	public double square() {
-		return dot(this);
 	}
 
 	@Override

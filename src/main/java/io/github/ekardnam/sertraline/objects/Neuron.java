@@ -123,19 +123,15 @@ public class Neuron {
 	 * @return {@link AbstractVector} weights' vector
 	 */
 	public AbstractVector weights() {
-		List<Double> weights = new ArrayList<>();
-		for (Synapsis s : inLinks) {
-			weights.add(s.w);
-		}
-		return new Vector(inLinks.size(), weights.stream().mapToDouble(value -> value).toArray());
+		double weights[] = new double[inLinks.size()];
+		for (int i = 0; i < inLinks.size(); i++) weights[i] = inLinks.get(i).w;
+		return new Vector(inLinks.size(), weights);
 	}
 
 	public AbstractVector inputs() {
-		List<Double> inputs = new ArrayList<>();
-		for (Synapsis s : inLinks) {
-			inputs.add(s.getInput());
-		}
-		return new Vector(inLinks.size(), inputs.stream().mapToDouble(value -> value).toArray());
+		double inputs[] = new double[inLinks.size()];
+		for (int i = 0; i < inLinks.size(); i++) inputs[i] = inLinks.get(i).getInput();
+		return new Vector(inLinks.size(), inputs);
 	}
 
 	/**
