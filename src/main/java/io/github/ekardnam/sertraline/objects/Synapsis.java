@@ -19,7 +19,7 @@ public class Synapsis {
 	/**
 	 * Synapsis's weight
 	 */
-	public double w;
+	protected double w;
 
 	/**
 	 * Constructs a synapsis

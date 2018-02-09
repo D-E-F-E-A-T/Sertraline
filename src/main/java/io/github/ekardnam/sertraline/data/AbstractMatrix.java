@@ -36,10 +36,25 @@ public abstract class AbstractMatrix implements VectorOperation {
      */
     public abstract AbstractMatrix divide(double scalar);
 
+    /**
+     * Multiplies the matrix by an {@link AbstractVector}
+     * @param vector the {@link AbstractVector}
+     * @return the result of the multiplication
+     */
     public abstract AbstractVector multiply(AbstractVector vector);
 
+    /**
+     * Multiplies the matrix by another matrix
+     * @param other the other matrix
+     * @return the result of the multiplication
+     */
     public abstract AbstractMatrix multiply(AbstractMatrix other);
 
+    /**
+     * Multiplies each value of the matrix by the other corresponding one and returns a matrix of those values
+     * @param other the other matrix
+     * @return the result
+     */
     public abstract AbstractMatrix multiplyOneToOne(AbstractMatrix other);
 
     public abstract double get(int row, int col);
