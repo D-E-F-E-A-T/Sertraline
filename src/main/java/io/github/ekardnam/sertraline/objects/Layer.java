@@ -38,7 +38,7 @@ public class Layer implements Iterable<Neuron> {
 	 * Returns how many neurons this layer contains
 	 * @return the number of neurons contained by this layer
 	 */
-	public int getHowManyNeurons() {
+	public int howManyNeurons() {
 		return neurons.size();
 	}
 
@@ -100,9 +100,9 @@ public class Layer implements Iterable<Neuron> {
 	 * @param inputs {@link AbstractVector} containing the inputs
 	 */
 	public void loadInputs(AbstractVector inputs) {
-		if (inputs.getDimension() != getHowManyNeurons()) throw new IllegalArgumentException("Illegal");
+		if (inputs.getDimension() != howManyNeurons()) throw new IllegalArgumentException("Illegal");
 
-		for (int i = 0; i < getHowManyNeurons(); i++) {
+		for (int i = 0; i < howManyNeurons(); i++) {
 			neurons.get(i).loadValue(inputs.get(i));
 		}
 	}

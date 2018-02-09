@@ -134,6 +134,6 @@ public class NeuralNetwork implements VectorOperation {
 	 * @return true if ADALINE else false
 	 */
 	public static boolean isADALINE(NeuralNetwork network) {
-		return network.getActivationFunction() == ActivationFunction.LINEAR_FUNCTION && isPerceptron(network) && network.outputLayer().getHowManyNeurons() == 1;
+		return network.getActivationFunction() == ActivationFunction.LINEAR_FUNCTION && isPerceptron(network) && network.outputLayer().howManyNeurons() == 1;
 	}
 }

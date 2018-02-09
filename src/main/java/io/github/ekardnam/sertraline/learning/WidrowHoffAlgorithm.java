@@ -44,8 +44,8 @@ public class WidrowHoffAlgorithm extends LearningAlgorithm {
 
 	@Override
 	protected boolean algorithm(@NotNull NeuralNetwork network, DataProvider provider) {
-		int howManyInputs = network.inputLayer().getHowManyNeurons();
-		int howManyOutputs = network.outputLayer().getHowManyNeurons();
+		int howManyInputs = network.inputLayer().howManyNeurons();
+		int howManyOutputs = network.outputLayer().howManyNeurons();
 
 		if (howManyInputs != provider.howManyInputs() && howManyOutputs != provider.howManyOutputs()) {
 			throw new IllegalArgumentException("Wrong data provided");
