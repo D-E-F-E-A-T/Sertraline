@@ -15,6 +15,9 @@ public class BiasSynapsis extends Synapsis {
         super(null, to, theta);
     }
 
+    /**
+     * Overrides {@link Synapsis#getInput()}
+     */
     @Override
     public double getInput() {
         return -1;

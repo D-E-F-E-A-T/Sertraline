@@ -128,6 +128,10 @@ public class Neuron {
 		return new Vector(inLinks.size(), weights);
 	}
 
+	/**
+	 * Returns an {@link AbstractVector} containing the Neuron inputs
+	 * @return the input vector
+	 */
 	public AbstractVector inputs() {
 		double inputs[] = new double[inLinks.size()];
 		for (int i = 0; i < inLinks.size(); i++) inputs[i] = inLinks.get(i).getInput();
@@ -146,7 +150,8 @@ public class Neuron {
 	}
 
 	/**
-	 *
+	 * Returns a Pair containing the inputs and outputs of this neuron
+	 * @return the Pair
 	 */
 	public Pair<AbstractVector, AbstractVector> getWeightInputPair() {
 		return new Pair<>(inputs(), weights());

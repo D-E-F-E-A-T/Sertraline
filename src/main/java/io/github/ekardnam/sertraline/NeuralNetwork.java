@@ -12,7 +12,6 @@ import io.github.ekardnam.sertraline.objects.Layer;
 
 /**
  * A class that represents a {@link NeuralNetwork}
- * @author Luca Bertozzi - ekardnam lucabertozzi.pub@gmail.com
  */
 public class NeuralNetwork implements VectorOperation {
 

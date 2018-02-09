@@ -51,6 +51,10 @@ public class Synapsis {
 		return getInput() * w;
 	}
 
+	/**
+	 * Returns the input from the linked {@link Neuron}
+	 * @return the input
+	 */
 	public double getInput() { return from.out; }
 
 }

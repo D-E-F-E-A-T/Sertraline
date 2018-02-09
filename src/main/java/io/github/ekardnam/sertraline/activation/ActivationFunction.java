@@ -2,7 +2,6 @@ package io.github.ekardnam.sertraline.activation;
 
 import io.github.ekardnam.sertraline.data.AbstractVector;
 
-//interface that describes a activation function
 public abstract class ActivationFunction {
 	
 	public static final ActivationFunction LINEAR_FUNCTION = new LinearFunction();
