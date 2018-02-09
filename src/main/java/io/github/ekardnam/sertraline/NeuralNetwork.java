@@ -9,7 +9,6 @@ import io.github.ekardnam.sertraline.builder.FeedForwardLinker;
 import io.github.ekardnam.sertraline.builder.LayerLinker;
 import io.github.ekardnam.sertraline.data.*;
 import io.github.ekardnam.sertraline.objects.Layer;
-import io.github.ekardnam.sertraline.objects.Neuron;
 
 /**
  * A class that represents a {@link NeuralNetwork}
@@ -88,27 +87,6 @@ public class NeuralNetwork implements VectorOperation {
 		inputLayer().loadInputs(input);
 		for (int i = 1; i < layers.size(); i++) layers.get(i).run();
 		return outputLayer().getOutput();
-	}
-
-	/**
-	 * Returns an {@link AbstractMatrix} with weights connetting layer of index index with layer of index - 1
-	 * @param index index of the layer
-	 * @return {@link AbstractMatrix} of weights
-	 */
-	public AbstractMatrix getWeightsMatrix(int index) {
-		//TODO("Better illegal message")
-		if (index == 0 || index > layers.size() - 1) throw new IllegalArgumentException("Illegal");
-
-		Layer layer = layers.get(index);
-		Layer before = layers.get(index - 1);
-		if (!FeedForwardLinker.areLinkedFeedForwardly(before, layer)) return null;
-
-		List<AbstractVector> weights = new ArrayList<>();
-		for (Neuron n : layer) {
-			weights.add(n.weights());
-		}
-
-		return new Matrix(before.getHowManyNeurons(), layer.getHowManyNeurons(), (AbstractVector[]) weights.toArray());
 	}
 
 	/**
