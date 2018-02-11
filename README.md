@@ -3,8 +3,11 @@ Sertraline is a Java Neural Network framework designed for studing purposes. The
 
 Sertraline is an anti-depressant-obsessant used in treating depression, OCD, PTSD and some anxiety disorders. Here used as name for the framework as referring to brain issues
 
-# Contributors
+## Contributors
 @ekardnam - Luca Bertozzi <<lucabertozzi.pub@gmail.com>>
 
-# TODOs
+## HowToo
+See [Sertraline wiki](https://github.com/ekardnam/Sertraline/wiki/Home) to know how to use the framework
+
+## TODOs
 See Sertraline development workflow in this repo projects
