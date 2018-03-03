@@ -49,9 +49,10 @@ public abstract class AbstractVector implements Iterable<Double> {
         return true;
     }
 
+    //TODO("Check this thing here")
     @Override
     public int hashCode() {
-        return Objects.hashCode(this);
+        return Double.hashCode(dot(new Vector(getDimension(), v -> (double) 1)));
     }
 
     @Override

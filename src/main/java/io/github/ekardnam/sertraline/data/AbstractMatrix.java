@@ -92,9 +92,14 @@ public abstract class AbstractMatrix implements VectorOperation {
         return true;
     }
 
+    //TODO("Check this one too")
     @Override
     public int hashCode() {
-        return Objects.hashCode(this);
+        double sum = 0;
+        for (int i = 0; i < howManyRows(); i++) for (int j = 0; j < howManyCols(); j++) {
+            sum += get(i, j);
+        }
+        return Double.hashCode(sum);
     }
 
     @Override

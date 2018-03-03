@@ -1,5 +1,6 @@
 package io.github.ekardnam.sertraline.data;
 
+import com.sun.istack.internal.NotNull;
 import io.github.ekardnam.sertraline.NeuralNetwork;
 import io.github.ekardnam.sertraline.objects.Layer;
 import io.github.ekardnam.sertraline.objects.Neuron;
@@ -16,7 +17,7 @@ public class NeuronAllocator<T> {
         allocated = new HashMap<>();
     }
 
-    public NeuronAllocator(NeuralNetwork network) {
+    public NeuronAllocator(@NotNull NeuralNetwork network) {
         this();
         for (Layer l : network.getLayers()) for (Neuron n : l) {
             allocated.put(n, new AtomicReference<>(null));

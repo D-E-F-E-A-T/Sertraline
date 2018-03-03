@@ -1,5 +1,7 @@
 package io.github.ekardnam.sertraline.data;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.function.Function;
 
 public class MutableVector extends Vector {
@@ -16,7 +18,7 @@ public class MutableVector extends Vector {
         super(dimension, init);
     }
 
-    public void set(AbstractVector vector) {
+    public void set(@NotNull AbstractVector vector) {
         if (vector.getDimension() != dimension) throw new IllegalArgumentException("Must have equal dimensions");
         for (int i = 0; i < dimension; i++) values[i] = get(i);
     }
