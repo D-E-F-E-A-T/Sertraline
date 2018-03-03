@@ -6,7 +6,6 @@ import io.github.ekardnam.sertraline.data.*;
 import io.github.ekardnam.sertraline.objects.Layer;
 import io.github.ekardnam.sertraline.objects.Neuron;
 
-import java.util.Collections;
 import java.util.ListIterator;
 import java.util.function.Function;
 
@@ -59,7 +58,7 @@ public class BackpropagationAlgorithm extends LearningAlgorithm {
 		if (network.getActivationFunction().derivable()) derivative = v -> network.getActivationFunction().derivative(v);
 		else derivative = v -> (double) 1;
 
-		NeuronVectorAllocator allocator = new NeuronVectorAllocator(network);
+		NeuronMVectorAllocator allocator = new NeuronMVectorAllocator(network);
 
 		for (int epoch = 0; epoch < maxEpochs; epoch++) {
 			double epochError = 0;
