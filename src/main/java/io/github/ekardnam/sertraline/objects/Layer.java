@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * A class that represents a layer of the neural network
  * @author Luca Bertozzi - ekardnam lucabertozzi.pub@gmail.com
  */
-public class Layer implements Iterable<Neuron> {
+public class Layer extends IdentifiedObject implements Iterable<Neuron> {
 
 	/**
 	 * A List of the {@link Neuron}s of this layer

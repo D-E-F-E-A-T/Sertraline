@@ -12,7 +12,7 @@ import javafx.util.Pair;
  * A class that represents a {@link Neuron}
  * @author Luca Bertozzi - ekardnam lucabertozzi.pub@gmail.com
  */
-public class Neuron {
+public class Neuron extends IdentifiedObject {
 
 	/**
 	 * Synapsis coming into this neuron

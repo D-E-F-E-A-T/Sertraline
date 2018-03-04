@@ -4,7 +4,7 @@ package io.github.ekardnam.sertraline.objects;
  * A class that represent a {@link Synapsis}
  * @author Luca Bertozzi - ekardnam lucabertozzi.pub@gmail.com
  */
-public class Synapsis {
+public class Synapsis extends IdentifiedObject {
 
 	/**
 	 * The {@link Neuron} the synapsis starts from
